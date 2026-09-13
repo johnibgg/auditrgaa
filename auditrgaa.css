@@ -442,3 +442,23 @@ code.enligne { background: var(--fond-appuye); padding: .12rem .35rem; border-ra
   .entete nav a.bouton { padding: .5rem .85rem; font-size: .86rem; margin-left: auto; }
   .heros { padding: 2.5rem 0 3rem; }
 }
+
+
+/* ---------- Citation d'un texte officiel ----------
+   Quand on cite l'administration mot pour mot, la citation doit se voir
+   comme telle : c'est la différence entre « l'État dit ceci » et « nous
+   pensons cela ». Le filet bleu à gauche marque la frontière. */
+blockquote.citation {
+  margin: 1.5rem 0;
+  padding: 1.1rem 1.4rem;
+  background: var(--marque-claire);
+  border-left: 4px solid var(--marque);
+  border-radius: 0 var(--rayon) var(--rayon) 0;
+}
+blockquote.citation p { margin: 0; }
+blockquote.citation p + p { margin-top: .5rem; }
+/* --encre-faible tombe à 4,37:1 sur ce fond bleu clair, sous le seuil AA
+   de 4,5:1. Notre propre moteur l'a relevé sur la page des sanctions.
+   Corrigé ici plutôt que sur la page, pour que la prochaine citation
+   n'ait pas à refaire le calcul. */
+blockquote.citation .muet { color: var(--encre-douce); }
