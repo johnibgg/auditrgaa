@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RGAA 4.1 : les 39 critères vérifiables par un outil, et les 67 qui ne le sont pas</title>
+<meta name="description" content="Sur les 106 critères du RGAA 4.1, 39 seulement peuvent être contrôlés de façon fiable par un logiciel. Voici lesquels, thème par thème, et pourquoi les 67 autres exigent un audit humain.">
+<meta property="og:title" content="RGAA 4.1 : ce qu'un outil peut vérifier, et ce qu'il ne peut pas">
+<meta property="og:description" content="Sur 106 critères, 39 sont automatisables. La liste exacte, thème par thème.">
+<meta property="og:type" content="article">
+<link rel="stylesheet" href="accessia.css">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<a class="evitement" href="#contenu">Aller au contenu principal</a>
+
+<header class="entete">
+  <div class="enveloppe">
+    <a class="logo" href="./"><svg class="marque" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+        <rect x="3" y="3" width="58" height="58" rx="15" fill="none"
+              stroke="currentColor" stroke-width="6" opacity=".42"/>
+        <rect x="15" y="15" width="34" height="34" rx="8" fill="currentColor"/>
+        <path d="M23 32.5 L29.5 39 L41 26.5" fill="none" stroke="var(--fond)"
+              stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg><span>Accessia</span><span class="point">.</span></a>
+    <nav aria-label="Navigation principale">
+      <a href="eaa.html">La réglementation</a>
+      <a href="criteres.html" aria-current="page">Les critères</a>
+      <a href="etude.html">L'étude</a>
+      <a href="declaration.html">Outil gratuit</a>
+      <a href="offres.html">Offres</a>
+      <a class="bouton" href="mailto:CONTACT@EXEMPLE.FR?subject=Audit%20gratuit%20de%20ma%20page%20d%27accueil">Audit gratuit</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+<section class="section">
+  <div class="enveloppe" style="max-width:860px">
+
+    <h1>RGAA 4.1&nbsp;: les 39 critères qu'un outil peut vérifier, et les 67 qui exigent un humain</h1>
+    <p class="chapeau">
+      Le référentiel général d'amélioration de l'accessibilité compte
+      <strong>106 critères</strong>. Les outils automatiques en contrôlent une
+      partie seulement&nbsp;: <strong>39</strong>, soit
+      <strong>37&nbsp;%</strong>. Cette page dit lesquels, thème par thème,
+      et pourquoi les autres ne peuvent pas l'être.
+    </p>
+
+    <div class="alerte alerte-info">
+      Cette page est <strong>générée depuis notre moteur d'analyse</strong>,
+      pas rédigée à la main. Si nous ajoutons une règle, elle apparaît ici ; si
+      nous en retirons une, elle disparaît. Une page de référence qui se
+      désynchronise de l'outil qu'elle décrit devient un mensonge poli.
+    </div>
+
+    <h2>Vue d'ensemble, par thème</h2>
+    <div class="defilant">
+      <table>
+        <caption>Couverture automatique du RGAA 4.1 par thématique</caption>
+        <thead>
+          <tr>
+            <th scope="col">Thème</th>
+            <th scope="col">Critères</th>
+            <th scope="col">Vérifiables par un outil</th>
+            <th scope="col">Part</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1. Images</td><td class="nombre">9</td><td class="nombre gras">3</td><td class="nombre">33 %</td></tr>
+          <tr><td>2. Cadres</td><td class="nombre">2</td><td class="nombre gras">2</td><td class="nombre">100 %</td></tr>
+          <tr><td>3. Couleurs</td><td class="nombre">3</td><td class="nombre gras">3</td><td class="nombre">100 %</td></tr>
+          <tr><td>4. Multimédia</td><td class="nombre">13</td><td class="nombre gras">3</td><td class="nombre">23 %</td></tr>
+          <tr><td>5. Tableaux</td><td class="nombre">8</td><td class="nombre gras">3</td><td class="nombre">38 %</td></tr>
+          <tr><td>6. Liens</td><td class="nombre">2</td><td class="nombre gras">1</td><td class="nombre">50 %</td></tr>
+          <tr><td>7. Scripts</td><td class="nombre">5</td><td class="nombre gras">2</td><td class="nombre">40 %</td></tr>
+          <tr><td>8. Éléments obligatoires</td><td class="nombre">10</td><td class="nombre gras">5</td><td class="nombre">50 %</td></tr>
+          <tr><td>9. Structuration de l&#x27;information</td><td class="nombre">4</td><td class="nombre gras">3</td><td class="nombre">75 %</td></tr>
+          <tr><td>10. Présentation de l&#x27;information</td><td class="nombre">14</td><td class="nombre gras">3</td><td class="nombre">21 %</td></tr>
+          <tr><td>11. Formulaires</td><td class="nombre">13</td><td class="nombre gras">5</td><td class="nombre">38 %</td></tr>
+          <tr><td>12. Navigation</td><td class="nombre">11</td><td class="nombre gras">3</td><td class="nombre">27 %</td></tr>
+          <tr><td>13. Consultation</td><td class="nombre">12</td><td class="nombre gras">3</td><td class="nombre">25 %</td></tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td><strong>Total</strong></td>
+            <td class="nombre gras">106</td>
+            <td class="nombre gras">39</td>
+            <td class="nombre gras">37 %</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <p>
+      Deux thèmes sortent du lot. <strong>Les couleurs</strong> sont
+      intégralement automatisables&nbsp;: un rapport de contraste est un
+      calcul. <strong>Le multimédia</strong> l'est à peine&nbsp;: juger si des
+      sous-titres sont fidèles à la bande-son suppose de l'écouter.
+    </p>
+
+    <h2>Le détail, thème par thème</h2>
+    <p class="muet">
+      Pour chaque thème&nbsp;: les critères que nous contrôlons, le défaut que
+      cela détecte, et pourquoi le reste échappe à la machine.
+    </p>
+
+    <article class="carte" style="margin-bottom:1.1rem">
+      <div class="entre" style="align-items:baseline">
+        <h3 style="margin:0">1. Images</h3>
+        <span class="petit muet nombre">3 / 9 automatisables</span>
+      </div>
+      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 1.1</span> Image sans alternative textuelle ; Bouton image sans alternative ; Zone cliquable d&#x27;image réactive sans alternative ; Élément role=img sans alternative ; SVG informatif sans alternative ; Élément object sans alternative</li><li><span class="jeton">Critère 1.2</span> Image décorative mal neutralisée</li><li><span class="jeton">Critère 1.10</span> Image réactive côté serveur</li></ul>
+      <p class="petit muet" style="margin:.9rem 0 0">
+        <strong>Pourquoi le reste échappe à la machine.</strong>
+        Un logiciel voit qu'une image a une alternative ; il ne peut pas juger si « photo1.jpg » décrit correctement le graphique de chiffre d'affaires qu'elle contient.
+      </p>
+    </article>
+    <article class="carte" style="margin-bottom:1.1rem">
+      <div class="entre" style="align-items:baseline">
+        <h3 style="margin:0">2. Cadres</h3>
+        <span class="petit muet nombre">2 / 2 automatisables</span>
+      </div>
+      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 2.1</span> Cadre sans titre ; Cadre non analysable</li><li><span class="jeton">Critère 2.2</span> Titres de cadres non uniques</li></ul>
+      <p class="petit muet" style="margin:.9rem 0 0">
+        <strong>Pourquoi le reste échappe à la machine.</strong>
+        La pertinence du titre d'un cadre suppose de comprendre ce qu'il y a dedans.
+      </p>
+    </article>
+    <article class="carte" style="margin-bottom:1.1rem">
+      <div class="entre" style="align-items:baseline">
+        <h3 style="margin:0">3. Couleurs</h3>
+        <span class="petit muet nombre">3 / 3 automatisables</span>
+      </div>
+      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 3.1</span> Lien identifiable uniquement par la couleur</li><li><span class="jeton">Critère 3.2</span> Contraste de couleurs insuffisant</li><li><span class="jeton">Critère 3.3</span> Contraste de couleurs insuffisant ; Contraste insuffisant (niveau AAA)</li></ul>
+      <p class="petit muet" style="margin:.9rem 0 0">
+        <strong>Pourquoi le reste échappe à la machine.</strong>
+        Le rapport de contraste se calcule. En revanche, savoir si une information est donnée <em>uniquement</em> par la couleur demande de lire la page.
+      </p>
+    </article>
+    <article class="carte" style="margin-bottom:1.1rem">
+      <div class="entre" style="align-items:baseline">
+        <h3 style="margin:0">4. Multimédia</h3>
+        <span class="petit muet nombre">3 / 13 automatisables</span>
+      </div>
+      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 4.1</span> Vidéo sans sous-titres ; Audio sans transcription</li><li><span class="jeton">Critère 4.3</span> Vidéo sans sous-titres</li><li><span class="jeton">Critère 4.13</span> Son déclenché automatiquement</li></ul>
+      <p class="petit muet" style="margin:.9rem 0 0">
+        <strong>Pourquoi le reste échappe à la machine.</strong>
+        Le sous-titrage, l'audiodescription et la transcription se vérifient en regardant et en écoutant. Aucune machine ne juge si des sous-titres sont fidèles.
+      </p>
+    </article>
+    <article class="carte" style="margin-bottom:1.1rem">
+      <div class="entre" style="align-items:baseline">
+        <h3 style="margin:0">5. Tableaux</h3>
+        <span class="petit muet nombre">3 / 8 automatisables</span>
+      </div>
+      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 5.4</span> Titre de tableau simulé ; Titre de tableau redondant</li><li><span class="jeton">Critère 5.6</span> En-tête de tableau vide</li><li><span class="jeton">Critère 5.7</span> En-tête de tableau sans cellules associées ; Attribut headers incorrect ; Attribut scope invalide ; Cellule de tableau complexe sans en-tête</li></ul>
+      <p class="petit muet" style="margin:.9rem 0 0">
+        <strong>Pourquoi le reste échappe à la machine.</strong>
+        Distinguer un tableau de données d'un tableau de mise en forme demande de comprendre le contenu.
+      </p>
+    </article>
+    <article class="carte" style="margin-bottom:1.1rem">
+      <div class="entre" style="align-items:baseline">
+        <h3 style="margin:0">6. Liens</h3>
+        <span class="petit muet nombre">1 / 2 automatisables</span>
+      </div>
+      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 6.1</span> Lien sans intitulé explicite ; Liens identiques vers des cibles différentes ; Bouton sans intitulé</li></ul>
+      <p class="petit muet" style="margin:.9rem 0 0">
+        <strong>Pourquoi le reste échappe à la machine.</strong>
+        On détecte un lien vide. On ne détecte pas qu'« En savoir plus » est ambigu dans son contexte.
+      </p>
+    </article>
+    <article class="carte" style="margin-bottom:1.1rem">
+      <div class="entre" style="align-items:baseline">
+        <h3 style="margin:0">7. Scripts</h3>
+        <span class="petit muet nombre">2 / 5 automatisables</span>
+      </div>
+      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 7.1</span> Attribut ARIA non autorisé ; Rôle ARIA non autorisé ; Attribut ARIA obligatoire manquant ; Structure ARIA incomplète ; Élément ARIA hors de son conteneur ; Rôle ARIA invalide ; Attribut ARIA invalide ; Valeur d&#x27;attribut ARIA invalide ; aria-hidden sur le corps de page ; Contrôles interactifs imbriqués ; Contrôle ARIA sans nom ; Jauge sans nom ; Barre de progression sans nom ; Infobulle sans nom ; Boîte de dialogue sans nom</li><li><span class="jeton">Critère 7.3</span> Élément masqué mais focusable ; Zone défilante inaccessible au clavier</li></ul>
+      <p class="petit muet" style="margin:.9rem 0 0">
+        <strong>Pourquoi le reste échappe à la machine.</strong>
+        Le comportement réel d'un composant interactif — ce qui se passe quand on l'active au clavier — se teste en l'utilisant.
+      </p>
+    </article>
+    <article class="carte" style="margin-bottom:1.1rem">
+      <div class="entre" style="align-items:baseline">
+        <h3 style="margin:0">8. Éléments obligatoires</h3>
+        <span class="petit muet nombre">5 / 10 automatisables</span>
+      </div>
+      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 8.2</span> Identifiant dupliqué ; Identifiant ARIA dupliqué ; Identifiant dupliqué sur élément actif</li><li><span class="jeton">Critère 8.3</span> Langue de la page non indiquée</li><li><span class="jeton">Critère 8.4</span> Code de langue invalide ; Déclarations de langue contradictoires</li><li><span class="jeton">Critère 8.5</span> Page sans titre</li><li><span class="jeton">Critère 8.8</span> Changement de langue invalide</li></ul>
+      <p class="petit muet" style="margin:.9rem 0 0">
+        <strong>Pourquoi le reste échappe à la machine.</strong>
+        La langue déclarée se vérifie ; la pertinence du titre de page par rapport à son contenu, non.
+      </p>
+    </article>
+    <article class="carte" style="margin-bottom:1.1rem">
+      <div class="entre" style="align-items:baseline">
+        <h3 style="margin:0">9. Structuration de l&#x27;information</h3>
+        <span class="petit muet nombre">3 / 4 automatisables</span>
+      </div>
+      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 9.1</span> Hiérarchie de titres incohérente ; Titre vide ; Absence de titre de niveau 1 ; Faux titre (paragraphe en gras)</li><li><span class="jeton">Critère 9.2</span> Absence de région principale ; Régions non distinguables ; Plusieurs en-têtes de page ; Plusieurs pieds de page ; Plusieurs régions principales ; En-tête imbriqué ; Complément imbriqué ; Pied de page imbriqué ; Région principale imbriquée ; Contenu hors de toute région</li><li><span class="jeton">Critère 9.3</span> Liste mal structurée ; Élément de liste orphelin ; Liste de définitions mal structurée ; Élément de définition orphelin</li></ul>
+      <p class="petit muet" style="margin:.9rem 0 0">
+        <strong>Pourquoi le reste échappe à la machine.</strong>
+        La hiérarchie des titres se contrôle. Savoir si elle reflète la structure logique du document, non.
+      </p>
+    </article>
+    <article class="carte" style="margin-bottom:1.1rem">
+      <div class="entre" style="align-items:baseline">
+        <h3 style="margin:0">10. Présentation de l&#x27;information</h3>
+        <span class="petit muet nombre">3 / 14 automatisables</span>
+      </div>
+      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 10.11</span> Zoom désactivé ; Zoom limité</li><li><span class="jeton">Critère 10.12</span> Espacement du texte non ajustable</li><li><span class="jeton">Critère 10.13</span> Ordre de focus incohérent</li></ul>
+      <p class="petit muet" style="margin:.9rem 0 0">
+        <strong>Pourquoi le reste échappe à la machine.</strong>
+        L'essentiel de ce thème concerne l'apparence à différentes tailles et le confort de lecture : cela se constate à l'œil.
+      </p>
+    </article>
+    <article class="carte" style="margin-bottom:1.1rem">
+      <div class="entre" style="align-items:baseline">
+        <h3 style="margin:0">11. Formulaires</h3>
+        <span class="petit muet nombre">5 / 13 automatisables</span>
+      </div>
+      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 11.1</span> Champ de formulaire sans étiquette ; Étiquette portée par le seul attribut title ; Champ avec plusieurs étiquettes ; Liste déroulante sans étiquette ; Champ ARIA sans nom ; Case ou interrupteur sans nom ; Bouton de formulaire sans intitulé ; Bouton sans intitulé</li><li><span class="jeton">Critère 11.5</span> Champs de même nature non regroupés ; Groupe de champs non identifié</li><li><span class="jeton">Critère 11.6</span> Champs de même nature non regroupés</li><li><span class="jeton">Critère 11.10</span> Champ obligatoire mal signalé</li><li><span class="jeton">Critère 11.13</span> Autocomplétion invalide</li></ul>
+      <p class="petit muet" style="margin:.9rem 0 0">
+        <strong>Pourquoi le reste échappe à la machine.</strong>
+        L'existence d'une étiquette se vérifie. Sa pertinence, le contrôle de saisie, la clarté des messages d'erreur, non.
+      </p>
+    </article>
+    <article class="carte" style="margin-bottom:1.1rem">
+      <div class="entre" style="align-items:baseline">
+        <h3 style="margin:0">12. Navigation</h3>
+        <span class="petit muet nombre">3 / 11 automatisables</span>
+      </div>
+      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 12.7</span> Absence de lien d&#x27;évitement ; Lien d&#x27;évitement inopérant</li><li><span class="jeton">Critère 12.8</span> Élément masqué mais focusable ; Zone défilante inaccessible au clavier ; Ordre de focus incohérent ; tabindex positif</li><li><span class="jeton">Critère 12.10</span> Raccourcis clavier en conflit</li></ul>
+      <p class="petit muet" style="margin:.9rem 0 0">
+        <strong>Pourquoi le reste échappe à la machine.</strong>
+        L'ordre de tabulation cohérent, la présence d'un plan du site utilisable : cela se parcourt.
+      </p>
+    </article>
+    <article class="carte" style="margin-bottom:1.1rem">
+      <div class="entre" style="align-items:baseline">
+        <h3 style="margin:0">13. Consultation</h3>
+        <span class="petit muet nombre">3 / 12 automatisables</span>
+      </div>
+      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 13.1</span> Rechargement ou redirection automatique ; Redirection automatique</li><li><span class="jeton">Critère 13.8</span> Son déclenché automatiquement ; Contenu clignotant ; Texte défilant</li><li><span class="jeton">Critère 13.11</span> Cible tactile trop petite</li></ul>
+      <p class="petit muet" style="margin:.9rem 0 0">
+        <strong>Pourquoi le reste échappe à la machine.</strong>
+        Les délais, les changements de contexte, la lisibilité des documents en téléchargement demandent une observation réelle.
+      </p>
+    </article>
+
+    <h2>Ce que cela change en pratique</h2>
+    <p>
+      Un contrôle automatique n'est pas un audit&nbsp;: c'est un premier tri.
+      Il attrape en quelques minutes les défauts les plus répandus — contrastes,
+      étiquettes de formulaire, alternatives manquantes, hiérarchie de titres —
+      qui représentent l'essentiel des non-conformités réellement rencontrées.
+      Il ne dit rien de la pertinence, du parcours clavier complet, ni de la
+      qualité du sous-titrage.
+    </p>
+    <p>
+      C'est pour cela qu'un outil qui annonce « votre site est conforme » ment
+      nécessairement. Le nôtre annonce « 39 critères testés, voici le
+      résultat, et voici les 67 qu'il reste à vérifier ». C'est moins
+      vendeur, et c'est le seul énoncé défendable devant un auditeur.
+    </p>
+
+    <div class="carte centre" style="margin-top:2.5rem">
+      <h2 style="margin-top:0">Voir ce que ça donne sur votre site</h2>
+      <p class="chapeau" style="margin:0 auto 1.25rem">
+        Une page analysée gratuitement, sous 24&nbsp;h&nbsp;: le score, chaque
+        défaut rattaché à son critère RGAA, et le code fautif.
+      </p>
+      <a class="bouton grand" href="mailto:CONTACT@EXEMPLE.FR?subject=Audit%20gratuit%20de%20ma%20page%20d%27accueil&amp;body=Bonjour%2C%0A%0AVoici%20l%27adresse%20du%20site%20%C3%A0%20analyser%20%3A%20%0A%0AMerci.">
+        Demander l'audit gratuit
+      </a>
+    </div>
+
+    <p class="petit muet" style="margin-top:2rem">
+      Référentiel&nbsp;: RGAA 4.1, publié par la direction interministérielle du
+      numérique. Moteur d'analyse&nbsp;: axe-core 4.10.2, critères WCAG 2.1 AA.
+      Page générée le 13/09/2026.
+    </p>
+
+  </div>
+</section>
+</main>
+
+<footer class="pied">
+  <div class="enveloppe entre">
+    <p style="margin:0">
+      <strong>Accessia</strong> &mdash; conformité EAA et RGAA 4.1.
+    </p>
+    <p style="margin:0">
+      <a href="./">Accueil</a> &middot;
+      <a href="eaa.html">La réglementation</a> &middot;
+      <a href="criteres.html">Les critères</a> &middot;
+      <a href="etude.html">L'étude</a> &middot;
+      <a href="declaration.html">Outil gratuit</a> &middot;
+      <a href="offres.html">Offres</a> &middot;
+      <a href="mentions-legales.html">Mentions légales</a>
+    </p>
+  </div>
+</footer>
+</body>
+</html>
