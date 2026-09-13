@@ -68,12 +68,30 @@
   }
   .verdict.visible { opacity: 1; }
 
+  .livrables {
+    margin-top: 1.4rem; display: grid; gap: .8rem;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    opacity: 0; transition: opacity .4s ease;
+  }
+  .livrables.visible { opacity: 1; }
+  .livrable {
+    background: var(--fond); border: 1px solid var(--bord);
+    border-top: 3px solid var(--marque); border-radius: 6px; padding: .85rem;
+  }
+  .livrable h3 { font-size: .98rem; margin: 0 0 .35rem; }
+  .livrable p { margin: 0; }
+  .encart-franc {
+    margin-top: 1.8rem; background: var(--marque-claire);
+    border-left: 3px solid var(--marque); border-radius: 0 var(--rayon) var(--rayon) 0;
+    padding: 1.1rem 1.3rem;
+  }
+
   .commandes { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 1rem; }
 
   /* Réglage système « animations réduites » : tout s'affiche d'emblée,
      l'animation ne se déclenche pas. */
   @media (prefers-reduced-motion: reduce) {
-    .defaut, .verdict { opacity: 1 !important; transform: none !important; }
+    .defaut, .verdict, .livrables { opacity: 1 !important; transform: none !important; }
     .etape { color: var(--encre) !important; }
     .curseur.clignote { animation: none; }
   }
@@ -108,8 +126,9 @@
 
     <h1 data-entree="2">Comment se déroule un audit</h1>
     <p class="chapeau" data-entree="3">
-      Quarante secondes, du moment où vous donnez une adresse à celui où le
-      rapport est prêt. Voici exactement ce qui se passe entre les deux.
+      Deux temps. L'analyse, d'abord — celle que n'importe quel outil gratuit
+      fait aussi. Puis les <strong>livrables</strong>, qui sont la seule
+      chose qu'on vous facture.
     </p>
 
     <div class="commandes">
@@ -193,9 +212,56 @@
           </p>
         </div>
       </div>
+    <div class="livrables" id="livrables">
+        <p class="petit muet" style="margin:0 0 .8rem;grid-column:1/-1">
+          <strong>Ce qui est produit dans la foulée&nbsp;:</strong>
+        </p>
+        <div class="livrable" data-livrable>
+          <h3>Le rapport, à votre marque</h3>
+          <p class="petit">
+            PDF avec votre logo et vos couleurs, prêt à remettre à votre
+            client. Chaque défaut porte son critère RGAA, l'extrait de code
+            fautif et les pages touchées.
+          </p>
+        </div>
+        <div class="livrable" data-livrable>
+          <h3>La déclaration d'accessibilité</h3>
+          <p class="petit">
+            Le document que la loi impose de publier, rédigé aux bons
+            articles, avec l'état de conformité et la voie de recours.
+            Facturé plusieurs centaines d'euros quand il est écrit à la main.
+          </p>
+        </div>
+        <div class="livrable" data-livrable>
+          <h3>La surveillance</h3>
+          <p class="petit">
+            L'analyse repart seule chaque semaine. Le jour où une mise en
+            production casse la conformité, vous le savez — avant l'autorité
+            de contrôle, avant votre client.
+          </p>
+        </div>
+      </div>
     </div>
 
-    <p class="aide" style="margin-top:1rem">
+    <div class="encart-franc">
+      <h2 style="font-size:1.1rem;margin-top:0">« Un scan, je peux le faire gratuitement »</h2>
+      <p style="margin:0 0 .7rem">
+        C'est exact, et nous ne prétendons pas le contraire&nbsp;: Lighthouse
+        est gratuit, les extensions de navigateur aussi. Ce qu'ils rendent,
+        c'est <code class="enligne">color-contrast</code> et
+        <code class="enligne">label</code> — des identifiants techniques
+        anglais.
+      </p>
+      <p style="margin:0">
+        Ce qui se facture commence après&nbsp;: la traduction en critères
+        RGAA opposables, le document remis au client, la déclaration légale,
+        et le fait que tout cela <strong>recommence seul chaque semaine</strong>.
+        Le travail que vous ne faites pas, c'est celui-là — pas les vingt
+        secondes de scan.
+      </p>
+    </div>
+
+    <p class="aide" style="margin-top:1.2rem">
       <strong>Démonstration sur un site d'exemple.</strong> Les défauts et leurs
       libellés sont ceux que l'outil produit réellement&nbsp;; les chiffres
       correspondent aux valeurs les plus fréquemment relevées dans
@@ -245,6 +311,7 @@
   var etapes = Array.prototype.slice.call(document.querySelectorAll("[data-etape]"));
   var defauts = Array.prototype.slice.call(document.querySelectorAll("[data-defaut]"));
   var verdict = document.getElementById("verdict");
+  var livrables = document.getElementById("livrables");
 
   var reduit = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var minuteries = [];
@@ -259,6 +326,7 @@
     etapes.forEach(function (e) { e.classList.remove("active"); });
     defauts.forEach(function (d) { d.classList.remove("visible"); });
     verdict.classList.remove("visible");
+    livrables.classList.remove("visible");
   }
 
   function tout_montrer() {
@@ -267,6 +335,7 @@
     etapes.forEach(function (e) { e.classList.add("active"); });
     defauts.forEach(function (d) { d.classList.add("visible"); });
     verdict.classList.add("visible");
+    livrables.classList.add("visible");
   }
 
   function jouer() {
@@ -290,6 +359,7 @@
           plus_tard(function () { d.classList.add("visible"); }, 4200 + n * 800);
         });
         plus_tard(function () { verdict.classList.add("visible"); }, 7000);
+        plus_tard(function () { livrables.classList.add("visible"); }, 8200);
         return;
       }
       urlTapee.textContent = ADRESSE.slice(0, i);
