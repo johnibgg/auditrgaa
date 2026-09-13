@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Démonstration — comment se déroule un audit d'accessibilité</title>
+<meta name="description" content="Ce que fait AuditRGAA, étape par étape : chargement de la page dans un navigateur réel, détection des défauts, rattachement aux critères RGAA 4.1, score.">
+<link rel="stylesheet" href="auditrgaa.css">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+  /* La scène : une reconstitution fidèle du déroulé réel d'un audit.
+     Les valeurs affichées proviennent de mesures réelles (moyennes de notre
+     étude sur 57 agences), présentées sur un site d'exemple — c'est dit
+     explicitement plus bas, on ne fait pas passer une démonstration pour
+     un rapport. */
+  .scene {
+    background: var(--fond-doux); border: 1px solid var(--bord);
+    border-radius: var(--rayon); padding: 1.5rem; min-height: 420px;
+  }
+  .barre-url {
+    display: flex; align-items: center; gap: .6rem; background: var(--fond);
+    border: 1px solid var(--bord-appuye); border-radius: 999px;
+    padding: .55rem 1rem; font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: .9rem; color: var(--encre-douce);
+  }
+  .curseur {
+    display: inline-block; width: 2px; height: 1.1em; background: var(--marque);
+    vertical-align: text-bottom;
+  }
+  .curseur.clignote { animation: bat 1s steps(2) infinite; }
+  @keyframes bat { 50% { opacity: 0; } }
+
+  .etapes { margin-top: 1.25rem; display: grid; gap: .55rem; }
+  .etape {
+    display: flex; align-items: flex-start; gap: .7rem; font-size: .93rem;
+    opacity: .25; transition: opacity .35s ease;
+  }
+  .etape.active { opacity: 1; }
+  .etape .puce {
+    width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+    border: 2px solid var(--bord-appuye); margin-top: .12rem;
+    display: grid; place-items: center; font-size: .7rem; font-weight: 700;
+    color: var(--fond);
+  }
+  .etape.active .puce { border-color: var(--marque); background: var(--marque); }
+  .etape.active .puce::after { content: "\2713"; }
+
+  .defauts { margin-top: 1.25rem; display: grid; gap: .5rem; }
+  .defaut {
+    background: var(--fond); border: 1px solid var(--bord);
+    border-left: 3px solid var(--critique); border-radius: 6px;
+    padding: .65rem .85rem; font-size: .9rem;
+    opacity: 0; transform: translateY(6px);
+    transition: opacity .3s ease, transform .3s ease;
+  }
+  .defaut.visible { opacity: 1; transform: none; }
+  .defaut.serieux { border-left-color: var(--serieux); }
+  .defaut .haut { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; }
+
+  .verdict {
+    margin-top: 1.25rem; display: flex; align-items: center; gap: 1.5rem;
+    opacity: 0; transition: opacity .4s ease;
+  }
+  .verdict.visible { opacity: 1; }
+
+  .commandes { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 1rem; }
+
+  /* Réglage système « animations réduites » : tout s'affiche d'emblée,
+     l'animation ne se déclenche pas. */
+  @media (prefers-reduced-motion: reduce) {
+    .etape, .defaut, .verdict { opacity: 1 !important; transform: none !important; }
+    .curseur.clignote { animation: none; }
+  }
+</style>
+</head>
+<body>
+<a class="evitement" href="#contenu">Aller au contenu principal</a>
+
+<header class="entete">
+  <div class="enveloppe">
+    <a class="logo" href="./"><svg class="marque" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+        <rect x="3" y="3" width="58" height="58" rx="15" fill="none"
+              stroke="currentColor" stroke-width="6" opacity=".42"/>
+        <rect x="15" y="15" width="34" height="34" rx="8" fill="currentColor"/>
+        <path d="M23 32.5 L29.5 39 L41 26.5" fill="none" stroke="var(--fond)"
+              stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg><span>Audit</span><span class="point">RGAA</span></a>
+    <nav aria-label="Navigation principale">
+      <a href="eaa.html">La réglementation</a>
+      <a href="criteres.html">Les critères</a>
+      <a href="demonstration.html" aria-current="page">Démonstration</a>
+      <a href="etude.html">L'étude</a>
+      <a href="declaration.html">Outil gratuit</a>
+      <a href="offres.html">Offres</a>
+      <a class="bouton" href="mailto:contact@auditrgaa.com?subject=Audit%20gratuit%20de%20ma%20page%20d%27accueil">Audit gratuit</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+<section class="section">
+  <div class="enveloppe" style="max-width:820px">
+
+    <h1>Comment se déroule un audit</h1>
+    <p class="chapeau">
+      Quarante secondes, du moment où vous donnez une adresse à celui où le
+      rapport est prêt. Voici exactement ce qui se passe entre les deux.
+    </p>
+
+    <div class="commandes">
+      <button type="button" class="bouton" id="lancer">Lancer la démonstration</button>
+      <button type="button" class="bouton second" id="rejouer" hidden>Rejouer</button>
+    </div>
+
+    <div class="scene">
+      <div class="barre-url">
+        <span aria-hidden="true">🔒</span>
+        <span id="url-tapee"></span><span class="curseur" id="curseur"></span>
+      </div>
+
+      <div class="etapes" id="etapes" role="status" aria-live="polite" aria-atomic="false">
+        <div class="etape" data-etape><span class="puce" aria-hidden="true"></span>
+          <span>Chargement de la page dans un navigateur Chromium réel — pas une simple lecture du code source</span></div>
+        <div class="etape" data-etape><span class="puce" aria-hidden="true"></span>
+          <span>Attente du rendu&nbsp;: menus, bannières et contenus montés en JavaScript</span></div>
+        <div class="etape" data-etape><span class="puce" aria-hidden="true"></span>
+          <span>Exécution des tests WCAG 2.1 AA — le périmètre juridique de la directive européenne</span></div>
+        <div class="etape" data-etape><span class="puce" aria-hidden="true"></span>
+          <span>Rattachement de chaque défaut à son critère RGAA 4.1</span></div>
+      </div>
+
+      <div class="defauts" id="defauts" aria-live="polite">
+        <div class="defaut" data-defaut>
+          <div class="haut">
+            <strong>Champ de formulaire sans étiquette</strong>
+            <span class="gravite g-critical">Critique</span>
+          </div>
+          <p class="petit muet" style="margin:.35rem 0 0">
+            L'utilisateur entend « zone de saisie » sans savoir quoi y mettre.
+            Sur un tunnel d'achat, c'est une vente perdue.
+          </p>
+          <p style="margin:.45rem 0 0"><span class="jeton">RGAA 11.1</span>
+            <span class="petit muet nombre">3 éléments concernés</span></p>
+        </div>
+
+        <div class="defaut serieux" data-defaut>
+          <div class="haut">
+            <strong>Contraste de couleurs insuffisant</strong>
+            <span class="gravite g-serious">Sérieux</span>
+          </div>
+          <p class="petit muet" style="margin:.35rem 0 0">
+            Texte illisible en plein soleil, sur un écran bas de gamme, ou pour
+            une personne malvoyante. Le défaut le plus fréquent.
+          </p>
+          <p style="margin:.45rem 0 0"><span class="jeton">RGAA 3.2</span>
+            <span class="jeton">RGAA 3.3</span>
+            <span class="petit muet nombre">12 éléments concernés</span></p>
+        </div>
+
+        <div class="defaut serieux" data-defaut>
+          <div class="haut">
+            <strong>Zoom désactivé sur mobile</strong>
+            <span class="gravite g-serious">Sérieux</span>
+          </div>
+          <p class="petit muet" style="margin:.35rem 0 0">
+            Une personne malvoyante ne peut pas agrandir le texte. Se corrige
+            en retirant un attribut d'une balise <code class="enligne">meta</code>.
+          </p>
+          <p style="margin:.45rem 0 0"><span class="jeton">RGAA 10.11</span>
+            <span class="petit muet nombre">1 élément concerné</span></p>
+        </div>
+      </div>
+
+      <div class="verdict" id="verdict">
+        <div class="pastille-score score-mauvais">
+          <span class="valeur nombre">70</span><span class="sur">/ 100</span>
+        </div>
+        <div>
+          <h2 style="margin:0 0 .2rem;font-size:1.15rem">Non conforme</h2>
+          <p class="petit" style="margin:0">
+            La note est plafonnée à 70 tant qu'un défaut critique subsiste&nbsp;:
+            un seul champ inutilisable bloque un parcours entier, quel que soit
+            le reste du site.
+          </p>
+          <p class="petit muet" style="margin:.4rem 0 0">
+            Rapport PDF et brouillon de déclaration d'accessibilité générés
+            dans la foulée.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <p class="aide" style="margin-top:1rem">
+      <strong>Démonstration sur un site d'exemple.</strong> Les défauts et leurs
+      libellés sont ceux que l'outil produit réellement&nbsp;; les chiffres
+      correspondent aux valeurs les plus fréquemment relevées dans
+      <a href="etude.html">notre étude sur 57 agences</a>. Ce n'est pas le
+      rapport d'un site existant.
+    </p>
+
+    <div class="carte centre" style="margin-top:2.5rem">
+      <h2 style="margin-top:0">Le même travail, sur votre site</h2>
+      <p class="chapeau" style="margin:0 auto 1.25rem">
+        Envoyez une adresse&nbsp;: vous recevez le vrai rapport sous 24&nbsp;h,
+        gratuitement, avec le code fautif de chaque défaut.
+      </p>
+      <a class="bouton grand" href="mailto:contact@auditrgaa.com?subject=Audit%20gratuit%20de%20ma%20page%20d%27accueil&amp;body=Bonjour%2C%0A%0AVoici%20l%27adresse%20du%20site%20%C3%A0%20analyser%20%3A%20%0A%0AMerci.">
+        Demander l'audit gratuit
+      </a>
+    </div>
+
+  </div>
+</section>
+</main>
+
+<footer class="pied">
+  <div class="enveloppe entre">
+    <p style="margin:0"><strong>AuditRGAA</strong> &mdash; conformité EAA et RGAA 4.1.</p>
+    <p style="margin:0">
+      <a href="./">Accueil</a> &middot;
+      <a href="eaa.html">La réglementation</a> &middot;
+      <a href="criteres.html">Les critères</a> &middot;
+      <a href="etude.html">L'étude</a> &middot;
+      <a href="declaration.html">Outil gratuit</a> &middot;
+      <a href="offres.html">Offres</a> &middot;
+      <a href="mentions-legales.html">Mentions légales</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var ADRESSE = "https://boutique-exemple.fr";
+  var lancer = document.getElementById("lancer");
+  var rejouer = document.getElementById("rejouer");
+  var urlTapee = document.getElementById("url-tapee");
+  var curseur = document.getElementById("curseur");
+  var etapes = Array.prototype.slice.call(document.querySelectorAll("[data-etape]"));
+  var defauts = Array.prototype.slice.call(document.querySelectorAll("[data-defaut]"));
+  var verdict = document.getElementById("verdict");
+
+  var reduit = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var minuteries = [];
+
+  function plus_tard(fn, ms) { minuteries.push(setTimeout(fn, ms)); }
+  function tout_arreter() { minuteries.forEach(clearTimeout); minuteries = []; }
+
+  function remettre_a_zero() {
+    tout_arreter();
+    urlTapee.textContent = "";
+    curseur.classList.add("clignote");
+    etapes.forEach(function (e) { e.classList.remove("active"); });
+    defauts.forEach(function (d) { d.classList.remove("visible"); });
+    verdict.classList.remove("visible");
+  }
+
+  function tout_montrer() {
+    urlTapee.textContent = ADRESSE;
+    curseur.classList.remove("clignote");
+    etapes.forEach(function (e) { e.classList.add("active"); });
+    defauts.forEach(function (d) { d.classList.add("visible"); });
+    verdict.classList.add("visible");
+  }
+
+  function jouer() {
+    remettre_a_zero();
+    lancer.hidden = true;
+    rejouer.hidden = false;
+
+    // Réglage système « animations réduites » : on affiche le résultat sans
+    // rien animer. Une démonstration n'a pas à imposer du mouvement à
+    // quelqu'un que le mouvement gêne — a fortiori sur ce site.
+    if (reduit) { tout_montrer(); return; }
+
+    var i = 0;
+    (function taper() {
+      if (i > ADRESSE.length) {
+        curseur.classList.remove("clignote");
+        etapes.forEach(function (e, n) {
+          plus_tard(function () { e.classList.add("active"); }, 500 + n * 900);
+        });
+        defauts.forEach(function (d, n) {
+          plus_tard(function () { d.classList.add("visible"); }, 4200 + n * 800);
+        });
+        plus_tard(function () { verdict.classList.add("visible"); }, 7000);
+        return;
+      }
+      urlTapee.textContent = ADRESSE.slice(0, i);
+      i += 1;
+      plus_tard(taper, 55);
+    })();
+  }
+
+  lancer.addEventListener("click", jouer);
+  rejouer.addEventListener("click", jouer);
+
+  // Au repos, la page montre déjà l'état final en sourdine (opacité réduite),
+  // de sorte qu'un visiteur qui ne clique pas voit quand même de quoi il
+  // s'agit — et qu'une capture d'écran de la page n'est jamais vide.
+  urlTapee.textContent = ADRESSE;
+})();
+</script>
+</body>
+</html>
