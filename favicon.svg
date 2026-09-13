@@ -1,21 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <title>AuditRGAA</title>
   <!--
-    Un anneau de focus.
+    Deux idées, deux formes, une seule grille.
 
-    Ce qui fait l'anneau de focus n'est pas le contour : c'est **l'espace**
-    entre le contour et l'élément (`outline-offset`). La première version
-    remplissait tout le carré et plaçait l'anneau dedans — elle se lisait
-    comme une banale case à cocher. Ici l'écart est franc (6 unités sur 64)
-    et tient jusqu'à 16 px.
+    L'ANNEAU extérieur est un anneau de focus : le contour qui entoure un
+    élément quand on navigue au clavier. Ce qui le fait reconnaître, c'est
+    l'écart avec le contenu (`outline-offset`) — 6 unités sur 64, conservé
+    jusqu'à 16 px.
 
-    Couleurs explicites, pas de `currentColor` : ce fichier est aussi servi
-    comme image, et une image n'hérite pas de la couleur du texte.
+    Le DISQUE au centre est le symbole universel du contraste. Ce n'est pas
+    un ornement : le contraste insuffisant est le défaut que nous relevons le
+    plus souvent — 30 % des sites de notre étude.
+
+    Ensemble : un élément, examiné, évalué. Une coche aurait dit « terminé »,
+    ce que dit déjà toute icône de case à cocher au monde.
+
+    Épaisseurs de trait : 6 pour l'anneau, 5 pour le disque. Rapport tenu à
+    toutes les tailles pour que la hiérarchie reste lisible à 16 px.
   -->
-  <rect x="3" y="3" width="58" height="58" rx="15"
-        fill="none" stroke="#1d4ed8" stroke-width="6"/>
-  <rect x="15" y="15" width="34" height="34" rx="8" fill="#1d4ed8"/>
-  <path d="M23 32.5 L29.5 39 L41 26.5"
-        fill="none" stroke="#ffffff" stroke-width="5.5"
-        stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="3" y="3" width="58" height="58" rx="15" fill="none"
+        stroke="#1d4ed8" stroke-width="6"/>
+  <circle cx="32" cy="32" r="15" fill="none" stroke="#1d4ed8" stroke-width="5"/>
+  <path d="M32 17 A15 15 0 0 0 32 47 Z" fill="#1d4ed8"/>
 </svg>
