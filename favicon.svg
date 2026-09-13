@@ -1,26 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <title>AuditRGAA</title>
   <!--
-    La touche Tab.
+    Un anneau de focus : le contour qui entoure un élément quand on navigue
+    au clavier. Ce qui le fait reconnaître, c'est l'écart avec le contenu
+    (`outline-offset`) — 6 unités sur 64, conservé jusqu'à 16 px.
 
-    Le pavé arrondi n'est pas un contenant décoratif : c'est une touche de
-    clavier. Le glyphe est celui gravé sur la touche Tab (⇥).
-
-    Pourquoi celle-là : presser Tab est le geste même de l'audit
-    d'accessibilité — c'est ainsi qu'on éprouve l'ordre de focus d'une page,
-    et c'est le seul moyen de naviguer pour qui n'utilise pas de souris.
-
-    Ce qui a été écarté, et pourquoi : la coche (c'est l'icône « tâche
-    terminée » de la terre entière), le demi-disque (c'est l'icône « basculer
-    clair/sombre » ; un visiteur cliquerait dessus en attendant un changement
-    de thème), les traits empilés (c'est « aligner à gauche »).
-
-    Une seule épaisseur de trait — 5,5 — pour le glyphe, 6 pour la touche.
+    Couleurs explicites, pas de `currentColor` : ce fichier est aussi servi
+    comme image, et une image n'hérite pas de la couleur du texte.
   -->
   <rect x="3" y="3" width="58" height="58" rx="15" fill="none"
         stroke="#1d4ed8" stroke-width="6"/>
-  <path d="M20 32 H37.5" stroke="#1d4ed8" stroke-width="5.5" stroke-linecap="round"/>
-  <path d="M30.5 25 L37.5 32 L30.5 39" fill="none" stroke="#1d4ed8"
+  <rect x="15" y="15" width="34" height="34" rx="8" fill="#1d4ed8"/>
+  <path d="M23 32.5 L29.5 39 L41 26.5" fill="none" stroke="#ffffff"
         stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M43.5 21.5 V42.5" stroke="#1d4ed8" stroke-width="5.5" stroke-linecap="round"/>
 </svg>
