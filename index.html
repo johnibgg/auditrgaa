@@ -38,9 +38,10 @@
 
 <main id="contenu">
 
-<section class="section">
+<section class="heros">
   <div class="enveloppe">
-    <div class="grille deux" style="align-items:center;gap:3rem">
+    <div class="heros-grille">
+
       <div>
         <p class="jeton" data-entree="1" style="margin-bottom:1rem">
           Applicable depuis le 28 juin 2025
@@ -58,7 +59,7 @@
           <a class="bouton grand" href="mailto:contact@auditrgaa.com?subject=Audit%20gratuit%20de%20ma%20page%20d%27accueil&amp;body=Bonjour%2C%0A%0AVoici%20l%27adresse%20du%20site%20%C3%A0%20analyser%20%3A%20%0A%0AMerci.">
             Analyser une page, gratuitement
           </a>
-          <a class="bouton second grand" href="offres.html">Voir les offres</a>
+          <a class="bouton second grand" href="demonstration.html">Voir un rapport</a>
         </p>
         <p class="aide">
           Envoyez l'adresse d'un site, recevez le diagnostic sous 24&nbsp;h.
@@ -66,21 +67,49 @@
         </p>
       </div>
 
+      <!-- Trois vraies captures de l'application. La première porte
+           l'information (le rapport), les deux autres la répètent en
+           arrière-plan : alternative vide, elles n'ajouteraient que du
+           bruit dans un lecteur d'écran (RGAA 1.2). -->
+      <div class="composition">
+        <img class="ecran-tableau" src="media/tableau.webp" alt="" width="1200" height="769">
+        <img class="ecran-rapport" src="media/rapport.webp" width="1400" height="1094"
+             alt="Rapport d'accessibilité de l'application : note de 70 sur 100 plafonnée
+                  par un défaut critique, taux de conformité RGAA de 92,1 %, et la liste
+                  des défauts à corriger rattachés à leur critère.">
+        <img class="ecran-correction" src="media/correction.webp" alt="" width="1200" height="259">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Le contenu du rapport quittait le bandeau : il y bataillait avec les
+     captures. Seul, il se lit. -->
+<section class="section">
+  <div class="enveloppe">
+    <div class="grille deux" style="gap:3rem;align-items:center">
+      <div>
+        <h2>Ce que vous recevez</h2>
+        <p class="chapeau">
+          Un document exploitable par un développeur, pas une liste
+          d'avertissements en anglais à retraduire.
+        </p>
+        <p>
+          <a class="bouton second" href="demonstration.html">Voir un rapport en entier</a>
+        </p>
+      </div>
       <div class="carte" style="background:var(--fond-doux)">
-        <h2 style="font-size:1.05rem">Ce que contient le rapport</h2>
+        <h3 style="margin-top:0">Ce que contient le rapport</h3>
         <ul style="padding-left:1.1rem;margin:0">
           <li>Un score de conformité par page et par site</li>
           <li>Chaque défaut rattaché à son <strong>critère RGAA 4.1</strong>,
               pas à un identifiant technique anglais</li>
-          <li>L'extrait de code fautif et la page où il se trouve</li>
+          <li>L'extrait de code fautif <strong>et le code corrigé</strong></li>
           <li>Un brouillon de <strong>déclaration d'accessibilité</strong>,
               document que la réglementation impose de publier</li>
           <li>Ce qu'il reste à vérifier à la main, nommément</li>
         </ul>
-        <p style="margin:1rem 0 0">
-          <a href="demonstration.html"><strong>Voir un rapport en entier</strong></a>
-          &mdash; sur un site réel, sans inscription.
-        </p>
         <hr style="border:0;border-top:1px solid var(--bord);margin:1.2rem 0">
         <p class="petit muet" style="margin:0">
           <strong>Ce que nous ne promettons pas&nbsp;:</strong> la conformité

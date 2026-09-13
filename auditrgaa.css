@@ -314,3 +314,131 @@ code.enligne { background: var(--fond-appuye); padding: .12rem .35rem; border-ra
   body { font-size: 11pt; }
   .carte { break-inside: avoid; box-shadow: none; }
 }
+
+
+/* ==========================================================================
+   Bandeau d'accueil : le produit derrière le titre
+   --------------------------------------------------------------------------
+   Les trois écrans empilés sont de vraies captures de l'application, prises
+   sur un scan réel ; seul le nom du site est fictif. Montrer une maquette
+   dessinée pour la circonstance serait plus facile et se verrait : un
+   acheteur d'outil d'audit reconnaît une interface qui n'existe pas.
+
+   Le fond est sombre pour une raison utilitaire, pas décorative : nos écrans
+   sont blancs, et sur un fond blanc ils se dissolvent. Le contraste du texte
+   est recalculé ici, aucun jeton clair n'est réutilisé tel quel.
+   ========================================================================== */
+.heros {
+  position: relative;
+  background:
+    radial-gradient(115% 120% at 8% -10%, #1e3a8a 0%, rgba(30,58,138,0) 55%),
+    linear-gradient(165deg, #111c38 0%, #0b1224 100%);
+  color: #fff;
+  overflow: hidden;
+  padding: 4.25rem 0 4.75rem;
+}
+/* Trame de points, très discrète : elle donne de la matière au fond sans
+   entrer en concurrence avec les captures. */
+.heros::before {
+  content: ""; position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,.13) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(80% 70% at 30% 20%, #000 0%, transparent 75%);
+  -webkit-mask-image: radial-gradient(80% 70% at 30% 20%, #000 0%, transparent 75%);
+  pointer-events: none;
+}
+.heros .enveloppe { position: relative; z-index: 1; }
+.heros h1 { color: #fff; }
+.heros .chapeau { color: #c7d2e4; }
+/* --encre-faible sur ce fond tombe à 4,0:1, sous le seuil. Valeur dédiée. */
+.heros .aide { color: #9fb0c9; }
+.heros .jeton {
+  background: rgba(96,165,250,.16); color: #bfdbfe;
+  border: 1px solid rgba(147,197,253,.38);
+}
+/* Le bouton secondaire devient fantôme : deux pleins se disputeraient l'oeil.
+   Bordure #94a3b8 = 6,4:1 sur ce fond, au-dessus des 3:1 exigés pour un
+   composant d'interface (WCAG 1.4.11). */
+.heros .bouton.second {
+  background: transparent; color: #fff; border-color: #94a3b8;
+}
+.heros .bouton.second:hover { background: rgba(255,255,255,.1); color: #fff; }
+.heros :focus-visible { outline-color: #93c5fd; }
+
+.heros-grille {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr);
+  gap: 3rem; align-items: center;
+}
+
+/* ---- L'empilement ----
+   Positions en pixels et non en pourcentages : un chevauchement se règle à
+   l'oeil, et un pourcentage le fait glisser à chaque largeur d'écran. */
+.composition { position: relative; height: 500px; }
+.composition::after {          /* halo, pour décoller la pile du fond */
+  content: ""; position: absolute; z-index: 0;
+  left: 4%; top: 12%; width: 92%; height: 76%;
+  background: radial-gradient(closest-side, rgba(59,130,246,.35), transparent);
+  filter: blur(46px);
+}
+.composition img {
+  position: absolute; display: block; border-radius: 12px;
+  /* `height: auto` n'est pas cosmétique ici : les attributs width/height du
+     HTML (posés pour réserver la place et éviter le saut de mise en page)
+     imposent sinon la hauteur naturelle de l'image. La capture du rapport
+     s'affichait en 335 x 1094 px au lieu de 335 x 262 sur téléphone. */
+  height: auto;
+  box-shadow: 0 22px 55px -14px rgba(2,6,23,.75), 0 3px 10px rgba(2,6,23,.45);
+  outline: 1px solid rgba(255,255,255,.14); outline-offset: -1px;
+}
+.ecran-tableau    { top: 0;     right: -104px; width: 466px; z-index: 1; }
+.ecran-rapport    { top: 78px;  left: -22px;  width: 522px; z-index: 2; }
+.ecran-correction { top: 402px; left: 108px;  width: 452px; z-index: 3; }
+
+/* Flottement : deux amplitudes différentes pour que la pile respire sans
+   jamais donner l'impression que la page bouge. Désactivé si la personne a
+   demandé moins d'animation (RGAA 13.8). */
+@media (prefers-reduced-motion: no-preference) {
+  .ecran-tableau    { animation: flotte 9s ease-in-out infinite; }
+  .ecran-correction { animation: flotte 7s ease-in-out .8s infinite reverse; }
+}
+@keyframes flotte {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-9px); }
+}
+
+@media (max-width: 1080px) {
+  .composition { height: 440px; }
+  .ecran-tableau    { width: 360px; right: -70px; }
+  .ecran-rapport    { width: 405px; top: 80px; }
+  .ecran-correction { width: 356px; top: 360px; left: 80px; }
+}
+
+/* Sous 900 px, la pile n'a plus la place de se chevaucher sans se mutiler :
+   on garde le seul écran qui porte l'argument, à plat, et on retire les
+   autres du DOM visuel. */
+@media (max-width: 900px) {
+  .heros-grille { grid-template-columns: 1fr; gap: 2.25rem; }
+  .composition { height: auto; }
+  .composition::after { display: none; }
+  .ecran-tableau, .ecran-correction { display: none; }
+  .ecran-rapport {
+    position: static; width: 100%; animation: none;
+    box-shadow: 0 14px 36px -12px rgba(2,6,23,.6);
+  }
+}
+
+
+/* ---------- En-tête sur petit écran ----------
+   À 375 px, les six liens plus le bouton prenaient trois lignes : 210 px de
+   navigation avant la moindre phrase, soit le quart de l'écran d'un
+   téléphone. On resserre plutôt que de masquer des liens derrière un menu
+   déroulant, qui coûterait un composant à piloter au clavier pour un gain
+   nul à ce nombre d'entrées. */
+@media (max-width: 760px) {
+  .entete .enveloppe { min-height: 0; padding-top: .6rem; padding-bottom: .6rem; gap: .6rem; }
+  .entete nav { margin-left: 0; width: 100%; gap: .5rem .9rem; }
+  .entete nav a { font-size: .86rem; }
+  .entete nav a.bouton { padding: .5rem .85rem; font-size: .86rem; margin-left: auto; }
+  .heros { padding: 2.5rem 0 3rem; }
+}
