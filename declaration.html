@@ -153,7 +153,11 @@
             <button type="button" class="bouton second" id="telecharger">Télécharger</button>
           </div>
         </div>
-        <div class="sortie" id="sortie" role="region" aria-live="polite"
+        <!-- tabindex="0" est obligatoire, pas décoratif : cette zone défile
+             (max-height + overflow-y), donc sans lui un utilisateur au clavier
+             ne peut pas en lire le bas. C'est le critère RGAA 7.3 / 12.8, et
+             notre propre scanner l'a relevé sur cette page avant publication. -->
+        <div class="sortie" id="sortie" role="region" tabindex="0" aria-live="polite"
              aria-label="Texte de la déclaration, mis à jour à la saisie"></div>
         <p class="aide" id="etat-copie" role="status" aria-live="polite"></p>
 
