@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Générateur de déclaration d'accessibilité RGAA — gratuit</title>
+<meta name="description" content="Générez gratuitement votre déclaration d'accessibilité conforme au RGAA 4.1. Outil en ligne, sans compte, sans envoi de données : tout se passe dans votre navigateur.">
+<meta property="og:title" content="Générateur de déclaration d'accessibilité RGAA — gratuit">
+<meta property="og:description" content="Le document que la réglementation impose de publier, rédigé en deux minutes.">
+<link rel="stylesheet" href="accessia.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231d4ed8'/><text y='72' x='50' text-anchor='middle' font-size='64' font-family='system-ui' font-weight='700' fill='white'>A</text></svg>">
+<style>
+  /* Le formulaire et le résultat côte à côte sur grand écran, empilés sur
+     mobile. Le résultat reste visible pendant la saisie : on voit le document
+     se construire, ce qui est le principal intérêt de l'outil. */
+  .atelier { display: grid; gap: 1.5rem; align-items: start; }
+  @media (min-width: 960px) {
+    .atelier { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
+    .resultat-colonne { position: sticky; top: 90px; }
+  }
+  fieldset {
+    border: 1px solid var(--bord); border-radius: var(--rayon);
+    padding: 1rem 1.1rem 1.1rem; margin: 0 0 1.1rem;
+  }
+  legend {
+    font-weight: 650; font-size: .92rem; padding: 0 .4rem;
+    color: var(--encre);
+  }
+  .sortie {
+    background: var(--fond-doux); border: 1px solid var(--bord);
+    border-radius: var(--rayon); padding: 1rem; white-space: pre-wrap;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .82rem; line-height: 1.55; max-height: 62vh; overflow-y: auto;
+    color: var(--encre);
+  }
+  .lignes-nc { display: grid; gap: .5rem; }
+  .ligne-nc { display: flex; gap: .5rem; align-items: flex-start; }
+  .ligne-nc input { flex: 1; }
+</style>
+</head>
+<body>
+<a class="evitement" href="#contenu">Aller au contenu principal</a>
+
+<header class="entete">
+  <div class="enveloppe">
+    <a class="logo" href="./"><span>Accessia</span><span class="point">.</span></a>
+    <nav aria-label="Navigation principale">
+      <a href="eaa.html">La réglementation</a>
+      <a href="etude.html">L'étude</a>
+      <a href="declaration.html" aria-current="page">Outil gratuit</a>
+      <a href="offres.html">Offres</a>
+      <a class="bouton" href="mailto:CONTACT@EXEMPLE.FR?subject=Audit%20gratuit%20de%20ma%20page%20d%27accueil">Audit gratuit</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+<section class="section">
+  <div class="enveloppe">
+
+    <h1>Générateur de déclaration d'accessibilité</h1>
+    <p class="chapeau">
+      La réglementation impose de publier une déclaration d'accessibilité et
+      de la tenir à jour. Remplissez les champs&nbsp;: le document se rédige
+      à mesure, prêt à copier.
+    </p>
+    <p class="aide" style="margin-bottom:2rem">
+      Gratuit, sans compte. <strong>Rien n'est envoyé</strong>&nbsp;: tout le
+      calcul se fait dans votre navigateur, nous ne voyons aucune de vos
+      données.
+    </p>
+
+    <div class="atelier">
+
+      <form id="formulaire" novalidate>
+        <fieldset>
+          <legend>L'organisme et le site</legend>
+          <div class="champ">
+            <label for="entite">Nom de l'organisme</label>
+            <input type="text" id="entite" placeholder="Société Dupont" required>
+          </div>
+          <div class="champ">
+            <label for="nom-site">Nom du site</label>
+            <input type="text" id="nom-site" placeholder="Site institutionnel Dupont">
+          </div>
+          <div class="champ">
+            <label for="url">Adresse du site</label>
+            <input type="url" id="url" placeholder="https://dupont.fr" inputmode="url">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>État de conformité</legend>
+          <div class="champ">
+            <label for="etat">Niveau atteint</label>
+            <select id="etat" aria-describedby="aide-etat">
+              <option value="totale">Conformité totale — aucun critère en échec</option>
+              <option value="partielle" selected>Conformité partielle — au moins la moitié des critères respectés</option>
+              <option value="non">Non-conformité — moins de la moitié</option>
+            </select>
+            <p class="aide" id="aide-etat">
+              Le RGAA ne reconnaît que ces trois états, et les seuils sont
+              fixés par lui.
+            </p>
+          </div>
+          <div class="champ">
+            <label for="taux">Taux de conformité constaté <span class="muet">(en %)</span></label>
+            <input type="text" id="taux" value="" placeholder="72" inputmode="decimal" style="max-width:140px">
+          </div>
+          <div class="champ">
+            <label for="date-audit">Date de l'audit</label>
+            <input type="text" id="date-audit" placeholder="JJ/MM/AAAA" style="max-width:180px">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Non-conformités relevées</legend>
+          <p class="aide" style="margin-top:0">
+            Une ligne par défaut. Exemple&nbsp;: « Images sans alternative
+            textuelle (critère 1.1) ».
+          </p>
+          <div class="lignes-nc" id="lignes-nc">
+            <div class="ligne-nc">
+              <label class="sr-seulement" for="nc-1">Non-conformité 1</label>
+              <input type="text" id="nc-1" class="nc" placeholder="Contraste de couleurs insuffisant (critère 3.2)">
+            </div>
+          </div>
+          <p style="margin:.7rem 0 0">
+            <button type="button" class="bouton second petit" id="ajouter-nc">
+              Ajouter une ligne
+            </button>
+          </p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Contact et méthode</legend>
+          <div class="champ">
+            <label for="contact">Adresse de contact accessibilité</label>
+            <input type="email" id="contact" placeholder="accessibilite@dupont.fr">
+          </div>
+          <div class="champ">
+            <label for="outil">Outil utilisé pour l'audit</label>
+            <input type="text" id="outil" value="axe-core 4.10.2 sur navigateur Chromium">
+          </div>
+        </fieldset>
+      </form>
+
+      <div class="resultat-colonne">
+        <div class="entre" style="margin-bottom:.7rem">
+          <h2 style="margin:0;font-size:1.1rem">Votre déclaration</h2>
+          <div class="pile">
+            <button type="button" class="bouton second" id="copier">Copier</button>
+            <button type="button" class="bouton second" id="telecharger">Télécharger</button>
+          </div>
+        </div>
+        <div class="sortie" id="sortie" role="region" aria-live="polite"
+             aria-label="Texte de la déclaration, mis à jour à la saisie"></div>
+        <p class="aide" id="etat-copie" role="status" aria-live="polite"></p>
+
+        <div class="alerte alerte-info" style="margin-top:1.2rem">
+          <strong>À relire avant publication.</strong> Ce générateur produit la
+          structure exigée et les mentions obligatoires. Il ne remplace pas
+          l'audit&nbsp;: les taux et les non-conformités que vous saisissez
+          doivent provenir d'une vérification réelle. Déclarer une conformité
+          qu'on n'a pas mesurée expose plus que de ne rien déclarer.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="carte centre" style="margin-top:3rem">
+      <h2 style="margin-top:0">Vous n'avez pas encore les chiffres&nbsp;?</h2>
+      <p class="chapeau" style="margin:0 auto 1.25rem">
+        Envoyez-nous l'adresse du site&nbsp;: nous analysons une page
+        gratuitement sous 24&nbsp;h et vous renvoyons le taux de conformité et
+        la liste des non-conformités, prêts à recopier ci-dessus.
+      </p>
+      <a class="bouton grand" href="mailto:CONTACT@EXEMPLE.FR?subject=Audit%20gratuit%20pour%20ma%20d%C3%A9claration&amp;body=Bonjour%2C%0A%0AVoici%20l%27adresse%20du%20site%20%C3%A0%20analyser%20%3A%20%0A%0AMerci.">
+        Demander l'audit gratuit
+      </a>
+    </div>
+
+  </div>
+</section>
+</main>
+
+<footer class="pied">
+  <div class="enveloppe entre">
+    <p style="margin:0">
+      <strong>Accessia</strong> &mdash; conformité EAA et RGAA 4.1.
+    </p>
+    <p style="margin:0">
+      <a href="./">Accueil</a> &middot;
+      <a href="etude.html">L'étude</a> &middot;
+      <a href="offres.html">Offres</a> &middot;
+      <a href="mentions-legales.html">Mentions légales</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var champs = ["entite", "nom-site", "url", "etat", "taux", "date-audit",
+                "contact", "outil"];
+  var sortie = document.getElementById("sortie");
+  var etatCopie = document.getElementById("etat-copie");
+
+  var PHRASES = {
+    totale: "Aucune non-conformité n'a été relevée sur le périmètre audité.",
+    partielle: "Les non-conformités relevées sont énumérées ci-dessous. " +
+               "Une mise en conformité est engagée.",
+    non: "Le site présente des non-conformités nombreuses qui empêchent " +
+         "l'usage par une partie des utilisateurs. Une mise en conformité " +
+         "est nécessaire."
+  };
+  var LIBELLES = {
+    totale: "conformité totale",
+    partielle: "conformité partielle",
+    non: "non-conformité"
+  };
+
+  function val(id, defaut) {
+    var e = document.getElementById(id);
+    var v = e ? e.value.trim() : "";
+    return v || defaut;
+  }
+
+  function nonConformites() {
+    var lignes = [];
+    var champsNc = document.querySelectorAll(".nc");
+    for (var i = 0; i < champsNc.length; i++) {
+      var v = champsNc[i].value.trim();
+      if (v) { lignes.push("- " + v); }
+    }
+    return lignes.length ? lignes.join("\n")
+                         : "[à compléter : liste des non-conformités relevées]";
+  }
+
+  function construire() {
+    var etat = document.getElementById("etat").value;
+    var entite = val("entite", "[nom de l'organisme]");
+    var site = val("nom-site", "[nom du site]");
+    var url = val("url", "[adresse du site]");
+    var taux = val("taux", "[taux]");
+    var date = val("date-audit", "[date]");
+    var contact = val("contact", "[adresse de contact]");
+    var outil = val("outil", "[outil d'audit]");
+
+    var texte =
+"DÉCLARATION D'ACCESSIBILITÉ\n\n" +
+entite + " s'engage à rendre son site accessible conformément à l'article 47\n" +
+"de la loi n° 2005-102 du 11 février 2005 et à la directive (UE) 2019/882\n" +
+"(European Accessibility Act).\n\n" +
+"Cette déclaration d'accessibilité s'applique à : " + site + " (" + url + ").\n\n" +
+"ÉTAT DE CONFORMITÉ\n\n" +
+site + " est en état de " + LIBELLES[etat] + " avec le référentiel général\n" +
+"d'amélioration de l'accessibilité (RGAA), version 4.1.\n\n" +
+PHRASES[etat] + "\n\n" +
+"RÉSULTATS DES TESTS\n\n" +
+"L'audit réalisé le " + date + " révèle que " + taux + " % des critères testés\n" +
+"sont respectés.\n\n" +
+"CONTENUS NON ACCESSIBLES\n\n" +
+"Non-conformités :\n\n" +
+nonConformites() + "\n\n" +
+"ÉTABLISSEMENT DE CETTE DÉCLARATION\n\n" +
+"Cette déclaration a été établie le " + date + ".\n\n" +
+"Technologies utilisées pour la réalisation du site : HTML, CSS, JavaScript.\n\n" +
+"Outil de vérification : " + outil + ".\n\n" +
+"RETOUR D'INFORMATION ET CONTACT\n\n" +
+"Si vous n'arrivez pas à accéder à un contenu ou à un service, vous pouvez\n" +
+"contacter le responsable du site pour être orienté vers une alternative\n" +
+"accessible ou obtenir le contenu sous une autre forme.\n\n" +
+"Contact : " + contact + "\n\n" +
+"VOIE DE RECOURS\n\n" +
+"Si vous constatez un défaut d'accessibilité vous empêchant d'accéder à un\n" +
+"contenu ou à une fonctionnalité du site, que vous nous le signalez et que\n" +
+"vous ne parvenez pas à obtenir une réponse, vous êtes en droit de faire\n" +
+"parvenir vos doléances ou une demande de saisine au Défenseur des droits.\n\n" +
+"Plusieurs moyens sont à votre disposition :\n" +
+"- le formulaire de contact : https://formulaire.defenseurdesdroits.fr/\n" +
+"- le délégué du Défenseur des droits de votre département\n" +
+"- par courrier (gratuit, ne pas affranchir) :\n" +
+"  Défenseur des droits, Libre réponse 71120, 75342 Paris CEDEX 07\n";
+
+    sortie.textContent = texte;
+  }
+
+  for (var i = 0; i < champs.length; i++) {
+    var e = document.getElementById(champs[i]);
+    if (e) { e.addEventListener("input", construire); e.addEventListener("change", construire); }
+  }
+  document.getElementById("lignes-nc").addEventListener("input", construire);
+
+  var compteurNc = 1;
+  document.getElementById("ajouter-nc").addEventListener("click", function () {
+    compteurNc += 1;
+    var bloc = document.createElement("div");
+    bloc.className = "ligne-nc";
+    var id = "nc-" + compteurNc;
+    bloc.innerHTML =
+      '<label class="sr-seulement" for="' + id + '">Non-conformité ' + compteurNc + '</label>' +
+      '<input type="text" id="' + id + '" class="nc" placeholder="Autre non-conformité (critère …)">';
+    document.getElementById("lignes-nc").appendChild(bloc);
+    document.getElementById(id).focus();
+  });
+
+  document.getElementById("copier").addEventListener("click", function () {
+    navigator.clipboard.writeText(sortie.textContent).then(function () {
+      etatCopie.textContent = "Déclaration copiée dans le presse-papiers.";
+    }, function () {
+      etatCopie.textContent = "La copie automatique a échoué. " +
+        "Sélectionnez le texte et copiez-le à la main.";
+    });
+  });
+
+  document.getElementById("telecharger").addEventListener("click", function () {
+    var lien = document.createElement("a");
+    var blob = new Blob([sortie.textContent], { type: "text/plain;charset=utf-8" });
+    lien.href = URL.createObjectURL(blob);
+    lien.download = "declaration-accessibilite.txt";
+    document.body.appendChild(lien);
+    lien.click();
+    document.body.removeChild(lien);
+    URL.revokeObjectURL(lien.href);
+    etatCopie.textContent = "Fichier declaration-accessibilite.txt téléchargé.";
+  });
+
+  construire();
+})();
+</script>
+</body>
+</html>
