@@ -268,8 +268,8 @@ code.enligne { background: var(--fond-appuye); padding: .12rem .35rem; border-ra
   [data-entree="4"] { animation-delay: .29s; }
 
   /* -- La marque : l'anneau de focus se pose ------------------------------
-     Un clin d'œil que seuls les développeurs front-end verront : le contour
-     arrive comme un vrai anneau de focus, en se resserrant légèrement. */
+     Le contour de la touche arrive comme un anneau de focus, en se
+     resserrant légèrement — le geste que la marque représente. */
   @keyframes anneau {
     from { opacity: 0; transform: scale(1.18); }
   }
