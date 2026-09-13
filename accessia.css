@@ -101,6 +101,15 @@ a:hover { color: var(--marque-sombre); }
 .entete nav a.bouton { color: #fff; }
 .entete nav a.bouton:hover { color: #fff; text-decoration: none; }
 
+/* ---------- La marque ----------
+   Un anneau de focus : le contour qui entoure un élément quand on navigue au
+   clavier. La coche prend la couleur du fond de page (et non un blanc en dur)
+   pour rester lisible en thème sombre comme en thème clair. */
+.logo .marque{
+  width:27px;height:27px;flex-shrink:0;margin-right:.55rem;
+  color:var(--marque);
+}
+
 /* ---------- Boutons ---------- */
 .bouton {
   display: inline-flex; align-items: center; justify-content: center; gap: .5rem;

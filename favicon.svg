@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!--
+    Version 16 px de la marque.
+
+    L'anneau de focus du logo complet disparaît à cette taille : un trait de
+    4 px à 38 % d'opacité devient invisible dans un onglet de navigateur. On
+    garde donc le carré plein et la coche, et l'anneau est rendu « en creux »
+    par un liseré blanc qui, lui, tient à petite taille.
+  -->
+  <rect width="64" height="64" rx="15" fill="#1d4ed8"/>
+  <rect x="6.5" y="6.5" width="51" height="51" rx="10.5"
+        fill="none" stroke="#ffffff" stroke-width="3" opacity=".34"/>
+  <path d="M19.5 33 L28 41.5 L45 23"
+        fill="none" stroke="#ffffff" stroke-width="7"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
