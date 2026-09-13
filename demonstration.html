@@ -31,11 +31,16 @@
   @keyframes bat { 50% { opacity: 0; } }
 
   .etapes { margin-top: 1.25rem; display: grid; gap: .55rem; }
+  /* L'état au repos passe par une COULEUR testée AA, pas par l'opacité.
+     Notre propre scanner a relevé le défaut sur cette page : à 25 %
+     d'opacité, le rapport de contraste tombait sous 4,5:1 (critère RGAA
+     3.2). Une page de démonstration qui échoue au test qu'elle démontre,
+     c'est le pire endroit possible pour ce défaut. */
   .etape {
     display: flex; align-items: flex-start; gap: .7rem; font-size: .93rem;
-    opacity: .25; transition: opacity .35s ease;
+    color: var(--encre-faible); transition: color .35s ease;
   }
-  .etape.active { opacity: 1; }
+  .etape.active { color: var(--encre); }
   .etape .puce {
     width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
     border: 2px solid var(--bord-appuye); margin-top: .12rem;
@@ -68,7 +73,8 @@
   /* Réglage système « animations réduites » : tout s'affiche d'emblée,
      l'animation ne se déclenche pas. */
   @media (prefers-reduced-motion: reduce) {
-    .etape, .defaut, .verdict { opacity: 1 !important; transform: none !important; }
+    .defaut, .verdict { opacity: 1 !important; transform: none !important; }
+    .etape { color: var(--encre) !important; }
     .curseur.clignote { animation: none; }
   }
 </style>
