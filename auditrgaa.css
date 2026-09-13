@@ -177,18 +177,6 @@ input:focus, select:focus, textarea:focus { border-color: var(--marque); }
   font-size: .78rem; font-weight: 650; font-variant-numeric: tabular-nums;
 }
 
-/* ---------- Aperçus du produit ---------- */
-.apercu { margin: 0 0 2rem; }
-.apercu img {
-  display: block; width: 100%; height: auto; border-radius: var(--rayon);
-  border: 1px solid var(--bord); box-shadow: var(--ombre);
-  background: var(--fond);
-}
-.apercu figcaption {
-  margin-top: .7rem; font-size: .92rem; color: var(--encre-douce);
-  max-width: 68ch;
-}
-
 /* ---------- Tableaux ---------- */
 table { width: 100%; border-collapse: collapse; }
 caption { text-align: left; font-weight: 650; padding-bottom: .6rem; color: var(--encre-douce); }
