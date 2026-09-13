@@ -1,16 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Accessia</title>
   <!--
-    Version 16 px de la marque.
+    Un anneau de focus.
 
-    L'anneau de focus du logo complet disparaît à cette taille : un trait de
-    4 px à 38 % d'opacité devient invisible dans un onglet de navigateur. On
-    garde donc le carré plein et la coche, et l'anneau est rendu « en creux »
-    par un liseré blanc qui, lui, tient à petite taille.
+    Ce qui fait l'anneau de focus n'est pas le contour : c'est **l'espace**
+    entre le contour et l'élément (`outline-offset`). La première version
+    remplissait tout le carré et plaçait l'anneau dedans — elle se lisait
+    comme une banale case à cocher. Ici l'écart est franc (6 unités sur 64)
+    et tient jusqu'à 16 px.
+
+    Couleurs explicites, pas de `currentColor` : ce fichier est aussi servi
+    comme image, et une image n'hérite pas de la couleur du texte.
   -->
-  <rect width="64" height="64" rx="15" fill="#1d4ed8"/>
-  <rect x="6.5" y="6.5" width="51" height="51" rx="10.5"
-        fill="none" stroke="#ffffff" stroke-width="3" opacity=".34"/>
-  <path d="M19.5 33 L28 41.5 L45 23"
-        fill="none" stroke="#ffffff" stroke-width="7"
+  <rect x="3" y="3" width="58" height="58" rx="15"
+        fill="none" stroke="#1d4ed8" stroke-width="6"/>
+  <rect x="15" y="15" width="34" height="34" rx="8" fill="#1d4ed8"/>
+  <path d="M23 32.5 L29.5 39 L41 26.5"
+        fill="none" stroke="#ffffff" stroke-width="5.5"
         stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
