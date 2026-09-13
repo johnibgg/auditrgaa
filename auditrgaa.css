@@ -155,7 +155,13 @@ input:focus, select:focus, textarea:focus { border-color: var(--marque); }
   border: 6px solid currentColor; font-weight: 700; flex-shrink: 0;
 }
 .pastille-score .valeur { font-size: 1.75rem; line-height: 1; }
-.pastille-score .sur { font-size: .7rem; opacity: .75; font-weight: 600; }
+/* Pas d'`opacity` sur du texte : la couleur obtenue dépend de ce qu'il y a
+   derrière, donc le contraste n'est plus calculable une fois pour toutes.
+   Ici, .75 d'opacité sur le rouge d'un mauvais score donnait #cb5555, soit
+   4,22:1 — sous le seuil, et seulement sur les scores bas, c'est-à-dire
+   exactement les sites de nos meilleurs prospects. La hiérarchie passe par
+   la taille, qui elle ne touche pas au contraste. */
+.pastille-score .sur { font-size: .7rem; font-weight: 600; }
 .score-bon { color: var(--bon); }
 .score-moyen { color: var(--moyen); }
 .score-mauvais { color: var(--critique); }

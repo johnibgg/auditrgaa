@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RGAA 4.1 : les 38 critères vérifiables par un outil, et les 68 qui ne le sont pas</title>
-<meta name="description" content="Sur les 106 critères du RGAA 4.1, 38 seulement peuvent être contrôlés de façon fiable par un logiciel. Voici lesquels, thème par thème, et pourquoi les 68 autres exigent un audit humain.">
+<title>RGAA 4.1 : les 36 critères vérifiables par un outil, et les 70 qui ne le sont pas</title>
+<meta name="description" content="Sur les 106 critères du RGAA 4.1, 36 seulement peuvent être contrôlés de façon fiable par un logiciel. Voici lesquels, thème par thème, et pourquoi les 70 autres exigent un audit humain.">
 <meta property="og:title" content="RGAA 4.1 : ce qu'un outil peut vérifier, et ce qu'il ne peut pas">
-<meta property="og:description" content="Sur 106 critères, 38 sont automatisables. La liste exacte, thème par thème.">
+<meta property="og:description" content="Sur 106 critères, 36 sont automatisables. La liste exacte, thème par thème.">
 <meta property="og:type" content="article">
 <link rel="stylesheet" href="auditrgaa.css">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -39,12 +39,12 @@
 <section class="section">
   <div class="enveloppe" style="max-width:860px">
 
-    <h1 data-entree="2">RGAA 4.1&nbsp;: les 38 critères qu'un outil peut vérifier, et les 68 qui exigent un humain</h1>
+    <h1 data-entree="2">RGAA 4.1&nbsp;: les 36 critères qu'un outil peut vérifier, et les 70 qui exigent un humain</h1>
     <p class="chapeau" data-entree="3">
       Le référentiel général d'amélioration de l'accessibilité compte
       <strong>106 critères</strong>. Les outils automatiques en contrôlent une
-      partie seulement&nbsp;: <strong>38</strong>, soit
-      <strong>36&nbsp;%</strong>. Cette page dit lesquels, thème par thème,
+      partie seulement&nbsp;: <strong>36</strong>, soit
+      <strong>34&nbsp;%</strong>. Cette page dit lesquels, thème par thème,
       et pourquoi les autres ne peuvent pas l'être.
     </p>
 
@@ -78,7 +78,7 @@
           <tr><td>8. Éléments obligatoires</td><td class="nombre">10</td><td class="nombre gras">5</td><td class="nombre">50 %</td></tr>
           <tr><td>9. Structuration de l&#x27;information</td><td class="nombre">4</td><td class="nombre gras">3</td><td class="nombre">75 %</td></tr>
           <tr><td>10. Présentation de l&#x27;information</td><td class="nombre">14</td><td class="nombre gras">3</td><td class="nombre">21 %</td></tr>
-          <tr><td>11. Formulaires</td><td class="nombre">13</td><td class="nombre gras">5</td><td class="nombre">38 %</td></tr>
+          <tr><td>11. Formulaires</td><td class="nombre">13</td><td class="nombre gras">3</td><td class="nombre">23 %</td></tr>
           <tr><td>12. Navigation</td><td class="nombre">11</td><td class="nombre gras">3</td><td class="nombre">27 %</td></tr>
           <tr><td>13. Consultation</td><td class="nombre">12</td><td class="nombre gras">3</td><td class="nombre">25 %</td></tr>
         </tbody>
@@ -86,8 +86,8 @@
           <tr>
             <td><strong>Total</strong></td>
             <td class="nombre gras">106</td>
-            <td class="nombre gras">38</td>
-            <td class="nombre gras">36 %</td>
+            <td class="nombre gras">36</td>
+            <td class="nombre gras">34 %</td>
           </tr>
         </tfoot>
       </table>
@@ -144,7 +144,7 @@
         <h3 style="margin:0">4. Multimédia</h3>
         <span class="petit muet nombre">3 / 13 automatisables</span>
       </div>
-      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 4.1</span> Vidéo sans sous-titres ; Audio sans transcription</li><li><span class="jeton">Critère 4.3</span> Vidéo sans sous-titres</li><li><span class="jeton">Critère 4.13</span> Son déclenché automatiquement</li></ul>
+      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 4.1</span> Vidéo sans sous-titres ; Audio sans transcription</li><li><span class="jeton">Critère 4.3</span> Vidéo sans sous-titres</li><li><span class="jeton">Critère 4.10</span> Son déclenché automatiquement</li></ul>
       <p class="petit muet" style="margin:.9rem 0 0">
         <strong>Pourquoi le reste échappe à la machine.</strong>
         Le sous-titrage, l'audiodescription et la transcription se vérifient en regardant et en écoutant. Aucune machine ne juge si des sous-titres sont fidèles.
@@ -166,7 +166,7 @@
         <h3 style="margin:0">6. Liens</h3>
         <span class="petit muet nombre">1 / 2 automatisables</span>
       </div>
-      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 6.1</span> Lien sans intitulé explicite ; Liens identiques vers des cibles différentes ; Bouton sans intitulé</li></ul>
+      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 6.1</span> Lien sans intitulé explicite ; Liens identiques vers des cibles différentes</li></ul>
       <p class="petit muet" style="margin:.9rem 0 0">
         <strong>Pourquoi le reste échappe à la machine.</strong>
         On détecte un lien vide. On ne détecte pas qu'« En savoir plus » est ambigu dans son contexte.
@@ -219,9 +219,9 @@
     <article class="carte" style="margin-bottom:1.1rem">
       <div class="entre" style="align-items:baseline">
         <h3 style="margin:0">11. Formulaires</h3>
-        <span class="petit muet nombre">5 / 13 automatisables</span>
+        <span class="petit muet nombre">3 / 13 automatisables</span>
       </div>
-      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 11.1</span> Champ de formulaire sans étiquette ; Étiquette portée par le seul attribut title ; Champ avec plusieurs étiquettes ; Liste déroulante sans étiquette ; Champ ARIA sans nom ; Case ou interrupteur sans nom ; Bouton de formulaire sans intitulé ; Bouton sans intitulé</li><li><span class="jeton">Critère 11.5</span> Champs de même nature non regroupés ; Groupe de champs non identifié</li><li><span class="jeton">Critère 11.6</span> Champs de même nature non regroupés</li><li><span class="jeton">Critère 11.10</span> Champ obligatoire mal signalé</li><li><span class="jeton">Critère 11.13</span> Autocomplétion invalide</li></ul>
+      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 11.1</span> Champ de formulaire sans étiquette ; Étiquette portée par le seul attribut title ; Champ avec plusieurs étiquettes ; Liste déroulante sans étiquette ; Champ ARIA sans nom ; Case ou interrupteur sans nom</li><li><span class="jeton">Critère 11.9</span> Bouton de formulaire sans intitulé ; Bouton sans intitulé</li><li><span class="jeton">Critère 11.13</span> Autocomplétion invalide</li></ul>
       <p class="petit muet" style="margin:.9rem 0 0">
         <strong>Pourquoi le reste échappe à la machine.</strong>
         L'existence d'une étiquette se vérifie. Sa pertinence, le contrôle de saisie, la clarté des messages d'erreur, non.
@@ -243,7 +243,7 @@
         <h3 style="margin:0">13. Consultation</h3>
         <span class="petit muet nombre">3 / 12 automatisables</span>
       </div>
-      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 13.1</span> Rechargement ou redirection automatique ; Redirection automatique</li><li><span class="jeton">Critère 13.8</span> Son déclenché automatiquement ; Contenu clignotant ; Texte défilant</li><li><span class="jeton">Critère 13.11</span> Cible tactile trop petite</li></ul>
+      <ul style="padding-left:1.1rem;margin:.6rem 0 0"><li><span class="jeton">Critère 13.1</span> Rechargement ou redirection automatique ; Redirection automatique</li><li><span class="jeton">Critère 13.8</span> Contenu clignotant ; Texte défilant</li><li><span class="jeton">Critère 13.11</span> Cible tactile trop petite</li></ul>
       <p class="petit muet" style="margin:.9rem 0 0">
         <strong>Pourquoi le reste échappe à la machine.</strong>
         Les délais, les changements de contexte, la lisibilité des documents en téléchargement demandent une observation réelle.
@@ -261,8 +261,8 @@
     </p>
     <p>
       C'est pour cela qu'un outil qui annonce « votre site est conforme » ment
-      nécessairement. Le nôtre annonce « 38 critères testés, voici le
-      résultat, et voici les 68 qu'il reste à vérifier ». C'est moins
+      nécessairement. Le nôtre annonce « 36 critères testés, voici le
+      résultat, et voici les 70 qu'il reste à vérifier ». C'est moins
       vendeur, et c'est le seul énoncé défendable devant un auditeur.
     </p>
 
@@ -299,9 +299,6 @@
       <a href="etude.html">L'étude</a> &middot;
       <a href="declaration.html">Outil gratuit</a> &middot;
       <a href="offres.html">Offres</a> &middot;
-      <a href="demonstration.html">Démonstration</a> &middot;
-      <a href="overlay.html">Les overlays</a> &middot;
-      <a href="sanctions.html">Les sanctions</a> &middot;
       <a href="mentions-legales.html">Mentions légales</a>
     </p>
   </div>
