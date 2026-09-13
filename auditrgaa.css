@@ -230,6 +230,85 @@ code.enligne { background: var(--fond-appuye); padding: .12rem .35rem; border-ra
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
 
+/* ==========================================================================
+   Mouvement
+   --------------------------------------------------------------------------
+   Deux règles tenues par la structure même du code, pas par la discipline :
+
+   1. Tout est enveloppé dans `prefers-reduced-motion: no-preference`. Qui a
+      demandé moins d'animations n'en reçoit aucune — et l'enveloppe garantit
+      qu'on ne peut pas l'oublier au fil des ajouts.
+
+   2. L'état VISIBLE est l'état par défaut. Aucun élément n'est parqué à
+      `opacity: 0` en attendant un script : si le JavaScript ne s'exécute pas,
+      si l'animation ne se déclenche pas, la page reste entièrement lisible.
+      C'est l'erreur la plus répandue des sites animés, et elle est fatale
+      ici : une page blanche sur un site d'accessibilité.
+
+   Le mouvement sert la hiérarchie (ce qui compte arrive d'abord) et le
+   retour d'action (ce qui est cliquable le montre). Rien de décoratif.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* -- Entrée en scène, une seule fois, au chargement ---------------------
+     `backwards` uniquement : l'élément emprunte l'état de départ pendant le
+     délai, puis revient à son style normal. Pas de `forwards`, qui figerait
+     la page dans l'état final de l'animation. */
+  @keyframes montee {
+    from { opacity: 0; transform: translateY(10px); }
+  }
+
+  .entete { animation: montee .4s ease-out backwards; }
+
+  [data-entree] { animation: montee .5s cubic-bezier(.16, 1, .3, 1) backwards; }
+  [data-entree="1"] { animation-delay: .05s; }
+  [data-entree="2"] { animation-delay: .13s; }
+  [data-entree="3"] { animation-delay: .21s; }
+  [data-entree="4"] { animation-delay: .29s; }
+
+  /* -- La marque : l'anneau de focus se pose ------------------------------
+     Un clin d'œil que seuls les développeurs front-end verront : le contour
+     arrive comme un vrai anneau de focus, en se resserrant légèrement. */
+  @keyframes anneau {
+    from { opacity: 0; transform: scale(1.18); }
+  }
+  .logo .marque > rect:first-of-type {
+    transform-box: fill-box; transform-origin: center;
+    animation: anneau .55s cubic-bezier(.16, 1, .3, 1) .2s backwards;
+  }
+
+  /* -- Retour d'action ---------------------------------------------------- */
+  .carte { transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+  .bouton { transition: background .14s ease, transform .1s ease; }
+  .bouton:active { transform: translateY(1px); }
+
+  .entete { transition: box-shadow .25s ease; }
+  .entete.defilee { box-shadow: 0 1px 0 var(--bord), 0 6px 18px rgba(15, 23, 42, .06); }
+}
+
+/* Le survol des cartes vaut aussi sans animation : seul le mouvement est
+   conditionné au réglage système, pas le changement de couleur. */
+.carte:hover { border-color: var(--bord-appuye); }
+@media (prefers-reduced-motion: no-preference) {
+  .carte:hover { transform: translateY(-2px); box-shadow: 0 2px 4px rgba(15,23,42,.05), 0 8px 22px rgba(15,23,42,.07); }
+}
+
+/* Soulignement des liens de navigation : il grandit depuis la gauche.
+   Sans mouvement, le lien se souligne simplement — le repère visuel reste. */
+.entete nav a:not(.bouton) { position: relative; text-decoration: none; }
+.entete nav a:not(.bouton)::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -3px;
+  height: 1.5px; background: currentColor; transform: scaleX(0);
+  transform-origin: left;
+}
+.entete nav a:not(.bouton):hover::after,
+.entete nav a:not(.bouton)[aria-current="page"]::after { transform: scaleX(1); }
+@media (prefers-reduced-motion: no-preference) {
+  .entete nav a:not(.bouton)::after { transition: transform .2s cubic-bezier(.16,1,.3,1); }
+}
+.entete nav a:not(.bouton):hover { text-decoration: none; }
+
 @media print {
   .entete, .pied, .bouton, .evitement { display: none !important; }
   body { font-size: 11pt; }
