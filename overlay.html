@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Un overlay d'accessibilité protège-t-il vraiment ? Ce que disent les faits</title>
-<meta name="description" content="La FTC a condamné accessiBe à 1 million de dollars pour des promesses de conformité trompeuses. 22,6 % des procès américains en accessibilité visaient des sites équipés d'un overlay. Ce que ces outils font, ce qu'ils ne font pas.">
+<meta name="description" content="Sous une ordonnance de la FTC, accessiBe a accepté de payer 1 million de dollars pour des promesses de conformité trompeuses. Ce que ces widgets font, et ce qu'ils ne font pas.">
 <meta property="og:title" content="Un overlay d'accessibilité protège-t-il vraiment ?">
-<meta property="og:description" content="Amende d'un million de dollars, procès en cours, et des sites équipés attaqués quand même. Les faits, sourcés.">
+<meta property="og:description" content="Un million de dollars sous une ordonnance de la FTC, et des sites équipés poursuivis quand même. Les faits, sourcés.">
 <meta property="og:type" content="article">
 <link rel="stylesheet" href="auditrgaa.css">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -42,8 +42,9 @@
     <h1 data-entree="2">Un overlay d'accessibilité protège-t-il vraiment&nbsp;?</h1>
     <p class="chapeau" data-entree="3">
       Une ligne de script, un widget avec une icône de bonhomme, et le site
-      serait conforme. La promesse est séduisante&nbsp;: elle a valu à son
-      principal promoteur <strong>un million de dollars d'amende</strong>.
+      serait conforme. La promesse est séduisante&nbsp;: elle a coûté à son
+      principal promoteur <strong>un million de dollars</strong>, dans le cadre
+      d'une ordonnance de l'autorité américaine de la concurrence.
       Voici les faits, sourcés, et ce qu'il faut en retenir en Europe.
     </p>
 
@@ -81,39 +82,13 @@
     </p>
 
     <h2>Ce que ça donne en justice</h2>
-    <div class="defilant">
-      <table>
-        <caption>Contentieux américain de l'accessibilité web, 2024–2025</caption>
-        <thead>
-          <tr><th scope="col">Constat</th><th scope="col">Chiffre</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Procès visant des sites <strong>équipés d'un overlay</strong>,
-                premier semestre 2025</td>
-            <td class="nombre gras">22,6 % du total</td>
-          </tr>
-          <tr>
-            <td>Sites utilisant accessiBe apparaissant dans des procès, 2024</td>
-            <td class="nombre">258</td>
-          </tr>
-          <tr>
-            <td>Sites utilisant UserWay, même période</td>
-            <td class="nombre">187</td>
-          </tr>
-          <tr>
-            <td>Procès en accessibilité web déposés en 2025</td>
-            <td class="nombre">8 667</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
     <p>
-      Le cas qui résume tout&nbsp;: un fleuriste en ligne avait acheté un
-      overlay en croyant se mettre en règle. Il a été attaqué par une personne
-      aveugle qui ne parvenait pas à utiliser le site. Il poursuit désormais
-      l'éditeur de l'overlay. <strong>Avoir installé le widget n'a pas été
-      retenu comme défense.</strong>
+      Aux États-Unis, des sites équipés d'un overlay continuent d'être
+      poursuivis pour inaccessibilité&nbsp;: le widget ne corrige pas le code
+      de la page, et c'est le code que la personne handicapée rencontre.
+      Nous ne reproduisons pas ici de statistiques de contentieux&nbsp;: elles
+      varient selon qui les compte, et nous ne publions que des chiffres dont
+      nous pouvons donner la source exacte.
     </p>
 
     <div class="alerte alerte-info">
@@ -138,7 +113,7 @@
     <p>
       Ce n'est pas une question de qualité de code, c'est une limite de nature.
       Reprenez les <a href="criteres.html">106 critères du RGAA</a>&nbsp;:
-      <strong>63 d'entre eux demandent un jugement</strong>.
+      <strong>74 d'entre eux demandent un jugement</strong>.
     </p>
     <ul>
       <li>Un script voit qu'une image n'a pas d'alternative. Il ne sait pas
@@ -153,8 +128,8 @@
       Et il y a l'effet pervers&nbsp;: un overlay mal réglé <strong>ajoute</strong>
       des obstacles. Des rôles ARIA posés au mauvais endroit font annoncer aux
       lecteurs d'écran des choses fausses — un bouton présenté comme une case à
-      cocher, un menu qui se dit vide. Beaucoup d'utilisateurs de lecteurs
-      d'écran désactivent ces widgets en premier.
+      cocher, un menu qui se dit vide. Des utilisateurs de lecteurs d'écran
+      disent désactiver ces widgets en premier.
     </p>
 
     <h2>Que faire à la place</h2>
@@ -166,7 +141,7 @@
           souvent sur tout un gabarit&nbsp;: une correction, des centaines
           d'éléments réparés. C'est durable, contrairement à une surcouche
           qui repart à chaque chargement.</li>
-      <li><strong>Auditer ce qui reste à la main</strong> — les 63 critères de
+      <li><strong>Auditer ce qui reste à la main</strong> — les 74 critères de
           jugement.</li>
       <li><strong>Publier la déclaration d'accessibilité</strong> et la tenir
           à jour.</li>
@@ -176,8 +151,8 @@
 
     <div class="alerte alerte-bon">
       <strong>Notre propre limite, puisqu'on parle de promesses.</strong>
-      Notre outil couvre 41&nbsp;% des critères du RGAA automatiquement, et il
-      l'écrit sur chaque rapport. Les 66&nbsp;% restants demandent un humain —
+      Notre outil couvre 30&nbsp;% des critères du RGAA automatiquement, et il
+      l'écrit sur chaque rapport. Les 70&nbsp;% restants demandent un humain —
       le nôtre vous aide à les trancher, il ne les remplace pas. Nous ne
       vendons pas de conformité en une ligne de script, parce que ça n'existe
       pas.
@@ -201,9 +176,6 @@
           avril 2025 — <a href="https://www.ftc.gov/legal-library/browse/cases-proceedings/2223156-accessibe-inc" rel="noopener nofollow">dossier public de la FTC</a>.</li>
       <li>Communiqué de la FTC, janvier 2025, sur les allégations de conformité
           automatique — <a href="https://www.ftc.gov/news-events/news/press-releases/2025/01/ftc-order-requires-online-marketer-pay-1-million-deceptive-claims-its-ai-product-could-make-websites" rel="noopener nofollow">ftc.gov</a>.</li>
-      <li>Statistiques de contentieux 2024–2025 relevées auprès de plusieurs
-          observateurs du secteur. Les chiffres varient légèrement selon la
-          méthode de comptage&nbsp;; les ordres de grandeur concordent.</li>
     </ul>
     <p class="petit muet">
       Page d'information générale, publiée en septembre 2026. Elle ne
@@ -217,7 +189,7 @@
 
 <footer class="pied">
   <div class="enveloppe entre">
-    <p style="margin:0"><strong>AuditRGAA</strong> &mdash; conformité EAA et RGAA 4.1.<br>
+    <p style="margin:0"><strong>AuditRGAA</strong> &mdash; conformité EAA et RGAA 4.1. Service indépendant, sans lien avec la DINUM ni l'État.<br>
       Écrivez-nous&nbsp;:
       <a href="mailto:contact@auditrgaa.com">contact@auditrgaa.com</a></p>
     <p style="margin:0">
@@ -232,7 +204,8 @@
       <a href="overlay.html">Les overlays</a> &middot;
       <a href="sanctions.html">Les sanctions</a> &middot;
       <a href="mentions-legales.html">Mentions légales</a> &middot;
-      <a href="conditions.html">Conditions de vente</a>
+      <a href="conditions.html">Conditions de vente</a> &middot;
+      <a href="confidentialite.html">Confidentialité</a>
     </p>
   </div>
 </footer>

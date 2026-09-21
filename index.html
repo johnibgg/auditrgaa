@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AuditRGAA — votre site est-il conforme à la loi européenne sur l'accessibilité ?</title>
-<meta name="description" content="Depuis juin 2025, les sites marchands et de service vendant dans l'Union doivent être accessibles. Audit RGAA 4.1 livré sous 48 h, chaque défaut rattaché à son critère. Analyse gratuite d'une page.">
+<meta name="description" content="Depuis juin 2025, les sites marchands et de service vendant dans l'Union doivent être accessibles. Diagnostic RGAA 4.1 livré sous 48 h, chaque défaut rattaché à son critère. Analyse gratuite d'une page.">
 <link rel="canonical" href="https://johnibgg.github.io/auditrgaa/">
 <meta property="og:title" content="Votre site est-il conforme à la loi européenne sur l'accessibilité ?">
-<meta property="og:description" content="Audit d'accessibilité livré sous 48 h, chaque défaut rattaché à son critère RGAA 4.1. Analyse gratuite d'une page.">
+<meta property="og:description" content="Diagnostic d'accessibilité livré sous 48 h, chaque défaut rattaché à son critère RGAA 4.1. Analyse gratuite d'une page.">
 <meta property="og:type" content="website">
 <link rel="stylesheet" href="auditrgaa.css">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -51,9 +51,8 @@
           Depuis juin 2025, tout site qui vend un produit ou un service à des
           consommateurs de l'Union doit être utilisable par les personnes
           handicapées. Commerce en ligne, banque, transport, télécoms,
-          formation&nbsp;: la plupart des sites professionnels sont concernés.
-          Les premières actions contentieuses ont été engagées en France en
-          novembre 2025.
+          formation&nbsp;: la plupart des sites professionnels sont concernés,
+          hors micro-entreprises.
         </p>
         <p class="pile" data-entree="4" style="margin-top:2rem">
           <a class="bouton grand" href="mailto:contact@auditrgaa.com?subject=Analyse%20gratuite%20de%20ma%20page%20d%27accueil&amp;body=Bonjour%2C%0A%0AVoici%20l%27adresse%20du%20site%20%C3%A0%20analyser%20%3A%20%0A%0AMerci.">
@@ -74,9 +73,9 @@
       <div class="composition">
         <img class="ecran-tableau" src="media/tableau.webp" alt="" width="1200" height="769">
         <img class="ecran-rapport" src="media/rapport.webp" width="1400" height="1094"
-             alt="Rapport d'accessibilité de l'application : note de 56 sur 100,
-                  taux de conformité RGAA de 86 % sur 43 critères testés,
-                  5 défauts distincts dont 3 critiques, et la liste des défauts
+             alt="Rapport d'accessibilité de l'application : note de 60 sur 100,
+                  26 critères sans défaut détecté sur les 32 vérifiables automatiquement,
+                  6 défauts distincts dont 3 critiques, et la liste des défauts
                   à corriger rattachés à leur critère RGAA.">
         <img class="ecran-correction" src="media/correction.webp" alt="" width="1200" height="259">
       </div>
@@ -109,13 +108,13 @@
           <li>L'extrait de code fautif <strong>et le code corrigé</strong></li>
           <li>La <strong>grille des 106 critères</strong> en Excel, prête à remplir</li>
           <li>Un brouillon de <strong>déclaration d'accessibilité</strong>,
-              document que la réglementation impose de publier</li>
+              à compléter au terme d'un audit</li>
           <li>Ce qu'il reste à vérifier à la main, nommément</li>
         </ul>
         <hr style="border:0;border-top:1px solid var(--bord);margin:1.2rem 0">
         <p class="petit muet" style="margin:0">
           <strong>Ce que nous ne promettons pas&nbsp;:</strong> la conformité
-          automatique. Un contrôle logiciel couvre 41&nbsp;% des 106 critères
+          automatique. Un contrôle logiciel couvre 30&nbsp;% des 106 critères
           du RGAA. Le reste exige un œil humain, et nous vous disons lesquels.
         </p>
       </div>
@@ -136,8 +135,8 @@
         <p class="petit" style="flex:1">
           Boutique en ligne, site de réservation, plateforme de services,
           organisme de formation. Vous voulez savoir où vous en êtes, obtenir
-          la liste des corrections à faire faire, et publier la déclaration
-          d'accessibilité que la loi exige.
+          la liste des corrections à faire faire, et préparer la déclaration
+          d'accessibilité.
         </p>
         <p class="petit muet" style="margin-bottom:1rem">
           <strong>Diagnostic, 490 &euro; HT</strong> &mdash; un site, jusqu'à
@@ -170,16 +169,17 @@
     <h2>Pourquoi un outil de plus</h2>
     <div class="grille trois" style="margin-top:2rem">
       <div class="carte">
-        <h3>Les outils gratuits parlent anglais</h3>
-        <p class="petit">Lighthouse et les extensions de navigateur rendent des
-        identifiants comme <code class="enligne">color-contrast</code>. Un
+        <h3>Les outils gratuits ne parlent pas RGAA</h3>
+        <p class="petit">Lighthouse et les extensions de navigateur ne rattachent
+        pas leurs résultats aux critères du RGAA&nbsp;: ils rendent des règles
+        comme <code class="enligne">color-contrast</code>. Un
         livrable français cite des critères RGAA. La traduction, aujourd'hui,
         c'est vous qui la faites.</p>
       </div>
       <div class="carte">
-        <h3>Un audit ne tient pas dans le temps</h3>
+        <h3>Un diagnostic ne tient pas dans le temps</h3>
         <p class="petit">Un site conforme cesse de l'être à la première mise en
-        production non vérifiée. C'est pour cela que l'audit se double d'une
+        production non vérifiée. C'est pour cela que le diagnostic se double d'une
         surveillance qui vous prévient quand le score chute.</p>
       </div>
       <div class="carte">
@@ -197,14 +197,13 @@
     <h2>Ce que risque un site non conforme</h2>
     <div class="defilant">
       <table>
-        <caption>Sanctions prévues par la transposition nationale de l'EAA (ordres de grandeur publiés)</caption>
+        <caption>En France, deux régimes distincts (sources officielles)</caption>
         <thead>
-          <tr><th scope="col">Pays</th><th scope="col">Sanction maximale annoncée</th></tr>
+          <tr><th scope="col">Texte</th><th scope="col">Qui contrôle</th><th scope="col">Sanction maximale</th></tr>
         </thead>
         <tbody>
-          <tr><td>Suède</td><td class="nombre">~900 000 &euro;</td></tr>
-          <tr><td>Irlande</td><td class="nombre">60 000 &euro; et/ou peine d'emprisonnement</td></tr>
-          <tr><td>France</td><td class="nombre">jusqu'à 50 000 &euro; par service, renouvelable</td></tr>
+          <tr><td>Code de la consommation, art. L.&nbsp;412-13 (transposition de l'EAA)</td><td>DGCCRF</td><td class="nombre">7 500 &euro;, cumulables</td></tr>
+          <tr><td>Loi n°&nbsp;2005-102, art. 47</td><td>Arcom</td><td class="nombre">50 000 &euro;</td></tr>
         </tbody>
       </table>
     </div>
@@ -212,7 +211,7 @@
       Les autorités commencent en général par une mise en demeure assortie d'un
       délai de correction. L'enjeu immédiat n'est pas l'amende&nbsp;: c'est le
       délai, très court, pour corriger un site entier.
-      <a href="eaa.html">Voir qui est concerné exactement</a>.
+      <a href="sanctions.html">Les sanctions pays par pays, relevées dans les textes</a>.
     </p>
   </div>
 </section>
@@ -236,7 +235,7 @@
 <footer class="pied">
   <div class="enveloppe entre">
     <p style="margin:0">
-      <strong>AuditRGAA</strong> &mdash; conformité EAA et RGAA 4.1.
+      <strong>AuditRGAA</strong> &mdash; conformité EAA et RGAA 4.1. Service indépendant, sans lien avec la DINUM ni l'État.
       Moteur <a href="https://github.com/dequelabs/axe-core" rel="noopener">axe-core</a> 4.10.2
       sur navigateur Chromium.<br>
       Écrivez-nous&nbsp;:
@@ -253,7 +252,8 @@
       <a href="overlay.html">Les overlays</a> &middot;
       <a href="sanctions.html">Les sanctions</a> &middot;
       <a href="mentions-legales.html">Mentions légales</a> &middot;
-      <a href="conditions.html">Conditions de vente</a>
+      <a href="conditions.html">Conditions de vente</a> &middot;
+      <a href="confidentialite.html">Confidentialité</a>
     </p>
   </div>
 </footer>

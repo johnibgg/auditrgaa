@@ -6,7 +6,7 @@
 <title>Générateur de déclaration d'accessibilité RGAA — gratuit</title>
 <meta name="description" content="Générez gratuitement votre déclaration d'accessibilité conforme au RGAA 4.1. Outil en ligne, sans compte, sans envoi de données : tout se passe dans votre navigateur.">
 <meta property="og:title" content="Générateur de déclaration d'accessibilité RGAA — gratuit">
-<meta property="og:description" content="Le document que la réglementation impose de publier, rédigé en deux minutes.">
+<meta property="og:description" content="La déclaration d'accessibilité, rédigée en deux minutes à partir de votre audit.">
 <link rel="stylesheet" href="auditrgaa.css">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <style>
@@ -21,7 +21,14 @@
   fieldset {
     border: 1px solid var(--bord); border-radius: var(--rayon);
     padding: 1rem 1.1rem 1.1rem; margin: 0 0 1.1rem;
+    /* Un fieldset refuse par défaut de rétrécir sous la largeur de son
+       contenu : la longue option « Conformité partielle — … » faisait
+       défiler la page de côté sur un téléphone (RGAA 10.11). Notre propre
+       sonde l'a trouvé. */
+    min-width: 0;
   }
+  .atelier > * { min-width: 0; }
+  select { max-width: 100%; }
   legend {
     font-weight: 650; font-size: .92rem; padding: 0 .4rem;
     color: var(--encre);
@@ -68,8 +75,10 @@
 
     <h1 data-entree="2">Générateur de déclaration d'accessibilité</h1>
     <p class="chapeau" data-entree="3">
-      La réglementation impose de publier une déclaration d'accessibilité et
-      de la tenir à jour. Remplissez les champs&nbsp;: le document se rédige
+      Les organismes soumis à l'article 47 de la loi de 2005 doivent publier
+      une déclaration d'accessibilité et la tenir à jour&nbsp;; pour les
+      autres, c'est la façon la plus claire de donner l'information
+      d'accessibilité que l'EAA demande. Remplissez les champs&nbsp;: le document se rédige
       à mesure, prêt à copier.
     </p>
     <p class="aide" style="margin-bottom:2rem">
@@ -108,7 +117,8 @@
             </select>
             <p class="aide" id="aide-etat">
               Le RGAA ne reconnaît que ces trois états, et les seuils sont
-              fixés par lui.
+              fixés par lui. Sans audit complet des 106 critères, la DINUM
+              demande de déclarer le site non conforme.
             </p>
           </div>
           <div class="champ">
@@ -199,7 +209,7 @@
 <footer class="pied">
   <div class="enveloppe entre">
     <p style="margin:0">
-      <strong>AuditRGAA</strong> &mdash; conformité EAA et RGAA 4.1.<br>
+      <strong>AuditRGAA</strong> &mdash; conformité EAA et RGAA 4.1. Service indépendant, sans lien avec la DINUM ni l'État.<br>
       Écrivez-nous&nbsp;: <a href="mailto:contact@auditrgaa.com">contact@auditrgaa.com</a>
     </p>
     <p style="margin:0">
@@ -213,7 +223,8 @@
       <a href="overlay.html">Les overlays</a> &middot;
       <a href="sanctions.html">Les sanctions</a> &middot;
       <a href="mentions-legales.html">Mentions légales</a> &middot;
-      <a href="conditions.html">Conditions de vente</a>
+      <a href="conditions.html">Conditions de vente</a> &middot;
+      <a href="confidentialite.html">Confidentialité</a>
     </p>
   </div>
 </footer>
@@ -270,9 +281,10 @@
 
     var texte =
 "DÉCLARATION D'ACCESSIBILITÉ\n\n" +
-entite + " s'engage à rendre son site accessible conformément à l'article 47\n" +
-"de la loi n° 2005-102 du 11 février 2005 et à la directive (UE) 2019/882\n" +
-"(European Accessibility Act).\n\n" +
+entite + " s'engage à rendre son site accessible conformément à la réglementation\n" +
+"qui lui est applicable : article 47 de la loi n° 2005-102 du 11 février 2005,\n" +
+"ou articles L. 412-13 et suivants du code de la consommation (directive (UE)\n" +
+"2019/882, European Accessibility Act). [Conserver la mention qui s'applique.]\n\n" +
 "Cette déclaration d'accessibilité s'applique à : " + site + " (" + url + ").\n\n" +
 "ÉTAT DE CONFORMITÉ\n\n" +
 site + " est en état de " + LIBELLES[etat] + " avec le référentiel général\n" +

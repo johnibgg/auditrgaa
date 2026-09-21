@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Une agence web française sur deux échoue sur son propre site — étude</title>
-<meta name="description" content="Nous avons audité l'accessibilité de 429 agences web françaises. La moitié présente un défaut critique sur sa propre vitrine. Méthode, résultats et données détaillées.">
+<meta name="description" content="Nous avons analysé automatiquement l'accessibilité de 429 agences web françaises. La moitié présente un défaut critique sur sa propre vitrine. Méthode, résultats et données détaillées.">
 <meta property="og:title" content="Une agence web française sur deux échoue sur son propre site">
-<meta property="og:description" content="Audit de 429 agences web françaises : une sur deux présente un défaut critique sur sa propre vitrine.">
+<meta property="og:description" content="Analyse automatique de 429 agences web françaises : une sur deux présente un défaut critique sur sa propre vitrine.">
 <meta property="og:type" content="article">
 <link rel="stylesheet" href="auditrgaa.css">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -42,11 +42,11 @@
     <p class="jeton" data-entree="1" style="margin-bottom:1rem">Étude &middot; septembre 2026</p>
     <h1 data-entree="2">Une agence web française sur deux échoue sur son propre site</h1>
     <p class="chapeau" data-entree="3">
-      Nous avons audité l'accessibilité de la page d'accueil de
+      Nous avons analysé automatiquement l'accessibilité de la page d'accueil de
       <strong>429 agences web françaises</strong>, prises dans un annuaire
       public. Elles vendent des sites internet. <strong>Une sur deux</strong>
-      présente sur sa propre vitrine un défaut qui empêche réellement
-      quelqu'un de s'en servir.
+      présente sur sa propre vitrine un défaut classé critique, de ceux qui
+      peuvent empêcher quelqu'un de s'en servir.
     </p>
 
     <h2>Les résultats</h2>
@@ -67,9 +67,9 @@
         <p class="petit muet" style="margin:0">en moyenne</p>
       </div>
       <div class="carte">
-        <p class="petit muet" style="margin:0">Critères RGAA respectés</p>
+        <p class="petit muet" style="margin:0">Critères sans défaut détecté</p>
         <p class="nombre" style="font-size:2.4rem;font-weight:700;margin:.2rem 0 0">92,0 %</p>
-        <p class="petit muet" style="margin:0">sur les 36 testables</p>
+        <p class="petit muet" style="margin:0">en moyenne, parmi ceux que la machine vérifiait</p>
       </div>
     </div>
 
@@ -99,21 +99,9 @@
         <tbody>
           <tr>
             <td><strong>Contraste de couleurs insuffisant</strong></td>
-            <td><span class="jeton">3.2</span> <span class="jeton">3.3</span></td>
+            <td><span class="jeton">3.2</span></td>
             <td class="nombre">115 &mdash; 27 %</td>
             <td class="petit">Toute personne malvoyante, et quiconque lit en plein soleil</td>
-          </tr>
-          <tr>
-            <td><strong>Lien sans intitulé explicite</strong></td>
-            <td><span class="jeton">6.1</span></td>
-            <td class="nombre">40 &mdash; 9 %</td>
-            <td class="petit">Le lecteur d'écran annonce « lien » sans dire où il mène</td>
-          </tr>
-          <tr>
-            <td><strong>Zoom désactivé sur mobile</strong></td>
-            <td><span class="jeton">10.11</span></td>
-            <td class="nombre">55 &mdash; 13 %</td>
-            <td class="petit">Impossible d'agrandir le texte sur téléphone</td>
           </tr>
           <tr>
             <td><strong>Image sans alternative textuelle</strong></td>
@@ -126,6 +114,18 @@
             <td><span class="jeton">7.1</span></td>
             <td class="nombre">76 &mdash; 18 %</td>
             <td class="petit">Menus et onglets non navigables au clavier</td>
+          </tr>
+          <tr>
+            <td><strong>Zoom désactivé sur mobile</strong></td>
+            <td><span class="jeton">10.4</span></td>
+            <td class="nombre">55 &mdash; 13 %</td>
+            <td class="petit">Impossible d'agrandir le texte sur téléphone</td>
+          </tr>
+          <tr>
+            <td><strong>Lien sans intitulé explicite</strong></td>
+            <td><span class="jeton">6.2</span></td>
+            <td class="nombre">40 &mdash; 9 %</td>
+            <td class="petit">Le lecteur d'écran annonce « lien » sans dire où il mène</td>
           </tr>
           <tr>
             <td><strong>Champ de formulaire sans étiquette</strong></td>
@@ -177,16 +177,15 @@
         ne dit rien du tunnel de commande, qui est presque toujours pire.
       </p>
       <p style="margin:0 0 .5rem">
-        <strong>Elle ne couvre que 36 des 106 critères du RGAA</strong>, soit
-        un tiers du référentiel à la date de l'étude (le moteur en couvre 43
-        depuis, en parcourant les pages au clavier) — ceux qu'un logiciel sait vérifier de façon
-        fiable. La pertinence des alternatives textuelles, la qualité du
+        <strong>Elle ne couvre qu'une partie des 106 critères du RGAA</strong>
+        — ceux qu'un logiciel sait vérifier de façon fiable, moins d'un tiers
+        du référentiel. La pertinence des alternatives textuelles, la qualité du
         sous-titrage et la cohérence du parcours clavier exigent un œil
         humain. <strong>Les chiffres ci-dessus sous-estiment donc le
         problème réel.</strong>
       </p>
       <p style="margin:0">
-        <strong>Nous ne publions pas les noms des agences auditées.</strong>
+        <strong>Nous ne publions pas les noms des agences analysées.</strong>
         L'objet est de mesurer un état du marché, pas de désigner des
         coupables. Chaque agence concernée peut obtenir son rapport détaillé
         sur simple demande.
@@ -198,10 +197,8 @@
       Une agence qui ne mesure pas l'accessibilité de son propre site ne la
       mesure pas davantage sur ceux de ses clients. Or depuis le
       <a href="eaa.html">28 juin 2025</a>, ce sont ces clients — commerçants en
-      ligne, banques, transporteurs — qui sont exposés. Les premières actions
-      contentieuses ont été engagées en France en novembre 2025, et l'autorité
-      de contrôle suédoise a publié une liste de 200 plateformes de commerce
-      en ligne à auditer.
+      ligne, banques, transporteurs — qui sont exposés, dès qu'ils dépassent
+      le seuil des micro-entreprises.
     </p>
     <p>
       L'agence n'est pas seulement exposée pour elle-même&nbsp;: elle l'est
@@ -234,7 +231,7 @@
 <footer class="pied">
   <div class="enveloppe entre">
     <p style="margin:0">
-      <strong>AuditRGAA</strong> &mdash; conformité EAA et RGAA 4.1.
+      <strong>AuditRGAA</strong> &mdash; conformité EAA et RGAA 4.1. Service indépendant, sans lien avec la DINUM ni l'État.
       Moteur <a href="https://github.com/dequelabs/axe-core" rel="noopener">axe-core</a> 4.10.2.<br>
       Écrivez-nous&nbsp;: <a href="mailto:contact@auditrgaa.com">contact@auditrgaa.com</a>
     </p>
@@ -249,7 +246,8 @@
       <a href="overlay.html">Les overlays</a> &middot;
       <a href="sanctions.html">Les sanctions</a> &middot;
       <a href="mentions-legales.html">Mentions légales</a> &middot;
-      <a href="conditions.html">Conditions de vente</a>
+      <a href="conditions.html">Conditions de vente</a> &middot;
+      <a href="confidentialite.html">Confidentialité</a>
     </p>
   </div>
 </footer>
