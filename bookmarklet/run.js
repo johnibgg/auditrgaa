@@ -34,14 +34,16 @@
     (document.head || document.documentElement).appendChild(s);
   }
 
+  function chaine(etapes, fin) {
+    (function suivant(i) { i >= etapes.length ? fin() : etapes[i](function () { suivant(i + 1); }); })(0);
+  }
   function demarrer() {
-    if (window.__RGAA && window.axe) return lancer();
-    var apresData = function () {
-      if (window.axe) return lancer();
-      charger(BASE + "axe.min.js", lancer, echecChargement);
-    };
-    if (window.__RGAA) apresData();
-    else charger(BASE + "rgaa-data.js", apresData, echecChargement);
+    chaine([
+      function (cb) { window.__RGAA ? cb() : charger(BASE + "rgaa-data.js", cb, echecChargement); },
+      // Fiches « comment corriger » : optionnelles, un échec ne bloque pas l'analyse.
+      function (cb) { window.__RGAA_FIX ? cb() : charger(BASE + "fixes.js", cb, function () { cb(); }); },
+      function (cb) { window.axe ? cb() : charger(BASE + "axe.min.js", cb, echecChargement); }
+    ], lancer);
   }
 
   function echecChargement() {
@@ -81,7 +83,7 @@
       defauts.push({
         titre: info ? info.t : (v.help || v.id),
         pourquoi: info ? info.p : (v.description || ""),
-        crit: crit, nb: nb, imp: imp,
+        crit: crit, nb: nb, imp: imp, r: v.id,
         ik: IMPACTS[v.impact] ? v.impact : "minor",
         xhtml: (v.nodes && v.nodes[0] && v.nodes[0].html) || "",
         exemple: (v.nodes && v.nodes[0] && v.nodes[0].target && v.nodes[0].target.join(" ")) || ""
@@ -137,6 +139,12 @@
           + '<p class="def-titre">' + echap(d.titre) + '</p>'
           + '<p class="def-pourquoi">' + echap(d.pourquoi) + '</p>'
           + '<div class="def-bas">' + badges + (d.exemple ? '<code>' + echap(d.exemple.slice(0, 60)) + '</code>' : "") + '</div>'
+          + (window.__RGAA_FIX && window.__RGAA_FIX[d.r]
+              ? '<details class="corriger"><summary>Comment corriger</summary><p>'
+                + echap(window.__RGAA_FIX[d.r].c) + '</p>'
+                + (window.__RGAA_FIX[d.r].code ? '<pre>' + echap(window.__RGAA_FIX[d.r].code) + '</pre>' : "")
+                + '</details>'
+              : "")
           + '</div>');
       });
       h.push('</div>');
@@ -149,7 +157,7 @@
     var dExport = {
       u: location.href, t: Date.now(), ok: ok, tot: total, nc: nbCritiques,
       ev: prec ? { d: prec.d, ok: prec.ok, tot: prec.tot } : null,
-      d: defauts.map(function (x) { return { t: x.titre, p: x.pourquoi, c: x.crit, n: x.nb, i: x.ik, x: (x.xhtml || "").slice(0, 600) }; })
+      d: defauts.map(function (x) { return { t: x.titre, p: x.pourquoi, c: x.crit, n: x.nb, i: x.ik, r: x.r, x: (x.xhtml || "").slice(0, 600) }; })
     };
     h.push('<button type="button" class="cta2 exporter">Exporter le rapport (marque blanche) →</button>');
 
@@ -259,6 +267,12 @@
     + '.def-titre{font-weight:600;font-size:14px;margin-bottom:3px}'
     + '.def-pourquoi{color:#475569;font-size:12.5px;margin-bottom:8px}'
     + '.def-bas{display:flex;flex-wrap:wrap;gap:6px;align-items:center}'
+    + '.corriger{margin-top:9px;font-size:12.5px}'
+    + '.corriger summary{cursor:pointer;color:#1d4ed8;font-weight:500;list-style:none}'
+    + '.corriger summary::-webkit-details-marker{display:none}'
+    + '.corriger summary::before{content:"\\002B  "}.corriger[open] summary::before{content:"\\2013  "}'
+    + '.corriger p{margin:6px 0;color:#475569}'
+    + '.corriger pre{background:#0f172a;color:#e2e8f0;padding:8px 10px;border-radius:8px;overflow-x:auto;font-size:11px;white-space:pre-wrap;word-break:break-word;margin:0}'
     + '.rgaa{background:#eff6ff;color:#1e40af;font-size:11.5px;font-weight:600;padding:2px 7px;border-radius:5px}.rgaa.hors{background:#f1f5f9;color:#64748b}'
     + 'code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;background:#f1f5f9;color:#334155;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}'
     + '.aucun{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;border-radius:10px;padding:12px}'
@@ -270,7 +284,8 @@
     + '.note{background:#15233f;color:#bfdbfe;border-color:#1e3a8a}.rgaa{background:#15233f;color:#93c5fd}.rgaa.hors{background:#1b2740;color:#94a3b8}'
     + 'code{background:#1b2740;color:#cbd5e1}.aucun{background:#0f2417;color:#86efac;border-color:#166534}'
     + '.cta2{color:#93c5fd;border-color:#93c5fd}.cta2:hover{background:#15233f}'
-    + '.evo.mieux{background:#0f2417;color:#86efac}.evo.pire{background:#2a1414;color:#fca5a5}.evo.neutre{background:#1b2740;color:#b4c0d6}}'
+    + '.evo.mieux{background:#0f2417;color:#86efac}.evo.pire{background:#2a1414;color:#fca5a5}.evo.neutre{background:#1b2740;color:#b4c0d6}'
+    + '.corriger summary{color:#93c5fd}.corriger p{color:#b4c0d6}}'
     + '</style>';
 
   demarrer();
