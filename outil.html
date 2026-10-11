@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test express RGAA : analysez une page en un clic | AuditRGAA</title>
+<meta name="description" content="Un outil gratuit qui teste l'accessibilité RGAA de la page que vous consultez — même en préprod ou derrière un login. Résultat immédiat dans votre navigateur, sans compte, sans envoi de données.">
+<link rel="canonical" href="https://auditrgaa.com/outil.html">
+<meta property="og:title" content="Test express RGAA : analysez une page en un clic">
+<meta property="og:description" content="Gratuit, immédiat, dans votre navigateur. Fonctionne même sur les pages en préprod ou derrière un login, là où les scanners « collez votre URL » ne peuvent pas aller.">
+<meta property="og:image" content="https://auditrgaa.com/media/apercu.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AuditRGAA — diagnostic d'accessibilité RGAA pour les agences web">
+<meta property="og:url" content="https://auditrgaa.com/outil.html">
+<script>try{var _t=localStorage.getItem("theme");if(_t)document.documentElement.setAttribute("data-theme",_t);}catch(e){}</script>
+<link rel="stylesheet" href="auditrgaa.css">
+<script src="anim.js" defer></script>
+<script src="theme.js" defer></script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<a class="evitement" href="#contenu">Aller au contenu principal</a>
+
+<header class="entete">
+  <div class="enveloppe">
+    <a class="logo" href="./"><svg class="marque" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+        <rect x="3" y="3" width="58" height="58" rx="17" fill="none"
+              stroke="currentColor" stroke-width="3.5" opacity=".42"/>
+        <rect x="13" y="13" width="38" height="38" rx="11" fill="currentColor"/>
+        <path d="M22.5 32.6 L29.3 39.4 L42 25.6" fill="none" stroke="var(--fond)"
+              stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg><span>Audit</span><span class="point">RGAA</span></a>
+    <nav aria-label="Navigation principale">
+      <a href="eaa.html">La réglementation</a>
+      <a href="criteres.html">Les critères</a>
+      <a href="prix.html">Les prix</a>
+      <a href="etude.html">L'étude</a>
+      <a href="outil.html" aria-current="page">Test express</a>
+      <a href="declaration.html">Outil gratuit</a>
+      <a href="offres.html">Offres</a>
+      <a class="bouton" href="mailto:contact@auditrgaa.com?subject=Analyse%20gratuite%20de%20ma%20page%20d%27accueil">Analyse gratuite</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+<section class="section">
+  <div class="enveloppe">
+    <p class="jeton" data-entree="1" style="margin-bottom:1rem">Gratuit · immédiat · rien ne quitte votre navigateur</p>
+    <h1 data-entree="2">Testez une page en un clic</h1>
+    <p class="chapeau" data-entree="3" style="margin-bottom:2rem">
+      Un outil qui analyse l'accessibilité RGAA&nbsp;4.1 de <strong>la page que vous
+      regardez</strong> et affiche les défauts, traduits en critères RGAA, directement
+      dans la page. Idéal pour un premier coup d'œil avant un audit complet.
+    </p>
+
+    <div class="grille deux" style="gap:2.5rem;align-items:start">
+      <div class="carte" data-entree="4" style="background:var(--marque-claire);border-color:#bfdbfe">
+        <h2 style="margin-top:0">Installez le bouton</h2>
+        <p>Faites <strong>glisser</strong> ce bouton dans votre barre de favoris
+           (sur ordinateur)&nbsp;:</p>
+        <p style="margin:1.25rem 0">
+          <a class="bouton grand"
+             href="javascript:(function(){var s=document.createElement('script');s.src='https://auditrgaa.com/bookmarklet/run.js?'+Date.now();(document.head||document.documentElement).appendChild(s);})();"
+             onclick="return false;"
+             title="Glissez-moi dans votre barre de favoris">⚡ Test RGAA</a>
+        </p>
+        <p class="aide">
+          Un clic sur le bouton ici ne fait rien&nbsp;: c'est normal, il faut le
+          <strong>glisser dans les favoris</strong>, puis le lancer depuis n'importe
+          quelle page.
+        </p>
+      </div>
+
+      <div data-entree="4">
+        <h2 style="margin-top:0">Comment ça marche</h2>
+        <ol style="padding-left:1.2rem;line-height:1.9">
+          <li>Glissez le bouton <strong>⚡ Test RGAA</strong> dans votre barre de favoris.</li>
+          <li>Ouvrez <strong>n'importe quelle page</strong> à tester — y compris une page
+              <strong>en préprod</strong> ou <strong>derrière un login</strong>.</li>
+          <li>Cliquez sur le favori&nbsp;: le <strong>rapport RGAA</strong> s'affiche sur
+              le côté, défaut par défaut.</li>
+        </ol>
+        <p class="jeton" style="margin-top:1rem">Son avantage sur les concurrents</p>
+        <p>Les scanners «&nbsp;collez votre URL&nbsp;» ne voient que les pages <em>publiques</em>.
+           Ce test tourne sur la page <strong>affichée dans votre navigateur</strong>&nbsp;:
+           il atteint vos environnements de préproduction et vos espaces connectés,
+           là où eux sont aveugles.</p>
+      </div>
+    </div>
+
+    <blockquote class="citation" style="margin-top:2.5rem">
+      <p><strong>En toute honnêteté&nbsp;:</strong> l'analyse automatique couvre
+         environ <strong>24 des 106 critères</strong> du RGAA&nbsp;4.1. C'est un excellent
+         point de départ, mais <strong>pas</strong> une déclaration de conformité&nbsp;:
+         la majorité des critères exigent un contrôle humain. C'est justement ce que
+         nous détestons chez les vendeurs d'«&nbsp;overlays&nbsp;» qui promettent 100&nbsp;%.</p>
+      <p class="muet">Le test ne transmet aucune donnée&nbsp;: tout se passe dans votre navigateur.</p>
+    </blockquote>
+
+    <div class="centre" style="margin-top:2.5rem">
+      <a class="bouton grand" href="offres.html">Obtenir un rapport complet commenté</a>
+      <p class="aide" style="margin-top:.75rem">Chaque défaut localisé, avec son code corrigé et un brouillon de déclaration.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="pied">
+  <div class="enveloppe">
+    <p>AuditRGAA — diagnostic d'accessibilité RGAA&nbsp;4.1. Test propulsé par axe-core 4.10.2.
+       <a href="mentions-legales.html">Mentions légales</a> ·
+       <a href="confidentialite.html">Confidentialité</a> ·
+       <a href="mailto:contact@auditrgaa.com">contact@auditrgaa.com</a></p>
+  </div>
+</footer>
+</body>
+</html>
