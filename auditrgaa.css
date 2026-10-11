@@ -541,3 +541,77 @@ h2 { font-size: clamp(1.65rem, 3.4vw, 2.5rem); }
     transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
   }
 }
+
+
+/* ==========================================================================
+   MODE SOMBRE (11/10/2026)
+   --------------------------------------------------------------------------
+   Sombre automatique selon le réglage système, + bouton de bascule.
+   Tout passe par les tokens : on redéfinit les couleurs, le reste suit.
+   Contrastes AA revérifiés DANS LE SOMBRE (le site doit rester 100/100 dans
+   les deux thèmes). Quelques couleurs sont décorrélées pour ça :
+   - --marque (liens) s'éclaircit en sombre, mais le fond des boutons garde
+     un bleu sur lequel le blanc passe (--bouton-fond) ;
+   - la barre de nav et les blocs de code ont leur propre token de fond, pour
+     ne pas rester clairs en thème sombre.
+   ========================================================================== */
+
+/* Nouveaux tokens (valeurs claires par défaut) + recâblage des composants */
+:root {
+  --nav-fond: rgba(255,255,255,.72);
+  --code-fond: var(--encre);
+  --bouton-fond: var(--marque);
+  --bouton-fond-hover: var(--marque-sombre);
+}
+.entete { background: var(--nav-fond); }
+pre { background: var(--code-fond); }
+.bouton { background: var(--bouton-fond); }
+.bouton:hover { background: var(--bouton-fond-hover); }
+/* Le lien d'évitement garde un bleu foncé (pas --marque, qui s'éclaircit en
+   sombre) pour que le texte blanc reste lisible quand il prend le focus. */
+.evitement { background: var(--bouton-fond); }
+.alerte-erreur { color: var(--critique); }
+.alerte-info   { color: var(--marque-sombre); }
+.alerte-bon    { color: var(--bon); }
+
+/* Palette sombre — appliquée si le système est en sombre (sauf thème clair
+   forcé), ou si l'utilisateur a choisi « sombre » via le bouton. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --encre: #e6ebf4; --encre-douce: #b4c0d6; --encre-faible: #92a0b8;
+    --fond: #0b1120; --fond-doux: #111a2e; --fond-appuye: #1b2740;
+    --bord: #243049; --bord-appuye: #35425d;
+    --marque: #60a5fa; --marque-sombre: #93c5fd; --marque-claire: #15233f;
+    --critique: #f87171; --critique-fond: #2a1414;
+    --serieux: #fb923c; --serieux-fond: #2a1a0e;
+    --moyen: #fbbf24; --moyen-fond: #241f08;
+    --mineur: #b4c0d6; --mineur-fond: #111a2e;
+    --bon: #4ade80; --bon-fond: #0f2417;
+    --nav-fond: rgba(11,17,32,.72); --code-fond: #060b16;
+    --bouton-fond: #1d4ed8; --bouton-fond-hover: #2563eb;
+    --ombre: 0 1px 2px rgba(0,0,0,.45), 0 8px 24px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"] {
+  --encre: #e6ebf4; --encre-douce: #b4c0d6; --encre-faible: #92a0b8;
+  --fond: #0b1120; --fond-doux: #111a2e; --fond-appuye: #1b2740;
+  --bord: #243049; --bord-appuye: #35425d;
+  --marque: #60a5fa; --marque-sombre: #93c5fd; --marque-claire: #15233f;
+  --critique: #f87171; --critique-fond: #2a1414;
+  --serieux: #fb923c; --serieux-fond: #2a1a0e;
+  --moyen: #fbbf24; --moyen-fond: #241f08;
+  --mineur: #b4c0d6; --mineur-fond: #111a2e;
+  --bon: #4ade80; --bon-fond: #0f2417;
+  --nav-fond: rgba(11,17,32,.72); --code-fond: #060b16;
+  --bouton-fond: #1d4ed8; --bouton-fond-hover: #2563eb;
+  --ombre: 0 1px 2px rgba(0,0,0,.45), 0 8px 24px rgba(0,0,0,.4);
+}
+
+/* Le bouton de bascule, injecté dans la barre de navigation par theme.js. */
+.bascule-theme {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; border-radius: 9999px;
+  border: 1px solid var(--bord-appuye); background: transparent;
+  color: var(--encre); font-size: 1.1rem; line-height: 1; cursor: pointer; padding: 0;
+}
+.bascule-theme:hover { background: var(--fond-appuye); color: var(--encre); }
