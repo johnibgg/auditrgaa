@@ -97,6 +97,17 @@
     + (d.nc ? ' — dont <strong style="color:var(--critique)">' + d.nc + ' critique(s)</strong>' : "")
     + '.</p></div></div>');
 
+  // Évolution depuis le scan précédent (feature C)
+  if (d.ev) {
+    var dv = d.ok - d.ev.ok;
+    var dt = new Date(d.ev.d).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+    var cls = dv > 0 ? "alerte-bon" : (dv < 0 ? "alerte-erreur" : "alerte-info");
+    var txt = dv > 0 ? "En progrès : +" + dv + " critère(s) sans défaut depuis le " + dt + " (" + d.ev.ok + " → " + d.ok + ")."
+      : dv < 0 ? "Régression : " + dv + " critère(s) depuis le " + dt + " (" + d.ev.ok + " → " + d.ok + ")."
+      : "Stable depuis le " + dt + " (" + d.ok + "/" + d.tot + ").";
+    h.push('<div class="alerte ' + cls + '" style="margin-bottom:1rem"><strong>Évolution.</strong> ' + echap(txt) + '</div>');
+  }
+
   h.push('<div class="alerte alerte-info"><strong>Portée de ce contrôle.</strong> '
     + 'L\'analyse automatique (axe-core 4.10.2) couvre environ ' + d.tot + ' des 106 critères '
     + 'du RGAA 4.1. Les autres critères exigent un contrôle humain : ce rapport est un état des '

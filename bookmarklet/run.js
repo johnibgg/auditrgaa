@@ -93,6 +93,14 @@
     var ok = total - enEchec;
     var couleur = enEchec === 0 ? "#15803d" : (enEchec <= 3 ? "#a16207" : "#b91c1c");
 
+    // Historique local (avant/après) : on lit le précédent, on enregistre l'actuel.
+    var cle = location.origin + location.pathname;
+    var H = histLire(), liste = H[cle] || [], prec = liste.length ? liste[liste.length - 1] : null;
+    var scanActuel = { d: Date.now(), ok: ok, tot: total, nd: defauts.length, nc: nbCritiques, cr: Object.keys(critsEnEchec) };
+    liste.push(scanActuel);
+    if (liste.length > 24) liste = liste.slice(-24);
+    H[cle] = liste; histEcrire(H);
+
     var h = [];
     h.push(entete());
     h.push('<div class="corps">');
@@ -108,6 +116,9 @@
       + ' de défaut détecté' + (defauts.length > 1 ? "s" : "")
       + (nbCritiques ? ' — dont <b style="color:#b91c1c">' + nbCritiques + ' critique' + (nbCritiques > 1 ? "s" : "") + '</b>' : "")
       + '.</p>');
+
+    // Avant / après (feature C)
+    h.push(blocEvolution(prec, scanActuel, liste));
 
     // Note d'honnêteté — l'argument anti-overlay
     h.push('<p class="note">L\'analyse automatique couvre ~<b>' + total + ' des 106 critères</b> du RGAA 4.1. '
@@ -136,6 +147,7 @@
     // Données pour l'export en marque blanche (rapport.html les relit).
     var dExport = {
       u: location.href, t: Date.now(), ok: ok, tot: total, nc: nbCritiques,
+      ev: prec ? { d: prec.d, ok: prec.ok, tot: prec.tot } : null,
       d: defauts.map(function (x) { return { t: x.titre, p: x.pourquoi, c: x.crit, n: x.nb, i: x.ik }; })
     };
     h.push('<button type="button" class="cta2 exporter">Exporter le rapport (marque blanche) →</button>');
@@ -189,6 +201,37 @@
     });
   }
 
+  // ---- Historique local (avant/après) ----
+  // Stocké dans le localStorage de la page auditée : le même navigateur, en
+  // revenant sur la même page après correction, voit l'évolution. Rien n'est
+  // envoyé ; si le stockage est indisponible, l'outil marche sans historique.
+  function histLire() {
+    try { return JSON.parse(localStorage.getItem("auditrgaa_historique")) || {}; }
+    catch (e) { return {}; }
+  }
+  function histEcrire(h) {
+    try { localStorage.setItem("auditrgaa_historique", JSON.stringify(h)); } catch (e) {}
+  }
+  function blocEvolution(prec, now, liste) {
+    if (!prec) {
+      return '<p class="evo neutre">Premier scan de cette page enregistré. '
+        + 'Relancez le test après correction pour mesurer l\'évolution.</p>';
+    }
+    var delta = now.ok - prec.ok;
+    var dd = new Date(prec.d).toLocaleDateString("fr-FR", { day: "numeric", month: "short" });
+    var nb = "scans";
+    var compte = liste.length >= 2 ? ' <span class="hist">' + liste.length + ' ' + nb + ' enregistrés</span>' : "";
+    if (delta > 0) {
+      return '<p class="evo mieux">↗ <b>+' + delta + ' critère' + (delta > 1 ? "s" : "")
+        + '</b> depuis le ' + dd + ' (' + prec.ok + ' → ' + now.ok + ')' + compte + '</p>';
+    }
+    if (delta < 0) {
+      return '<p class="evo pire">↘ <b>' + delta + ' critère' + (delta < -1 ? "s" : "")
+        + '</b> depuis le ' + dd + ' — attention, régression (' + prec.ok + ' → ' + now.ok + ')' + compte + '</p>';
+    }
+    return '<p class="evo neutre">→ Stable depuis le ' + dd + ' (' + now.ok + '/' + now.tot + ')' + compte + '</p>';
+  }
+
   var STYLE = '<style>'
     + ':host{all:initial}'
     + '*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}'
@@ -204,6 +247,9 @@
     + '.score-txt strong{font-size:15px}.score-txt p{color:#475569;font-size:13px;margin-top:2px}'
     + '.resume{font-size:14px;margin:4px 0 12px}'
     + '.note{background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;border-radius:10px;padding:10px 12px;font-size:12.5px;margin-bottom:16px}'
+    + '.evo{font-size:13px;font-weight:500;padding:9px 12px;border-radius:10px;margin:0 0 14px}'
+    + '.evo.mieux{background:#f0fdf4;color:#15803d}.evo.pire{background:#fef2f2;color:#b91c1c}.evo.neutre{background:#f1f5f9;color:#475569}'
+    + '.evo .hist{font-weight:400;opacity:.75}'
     + '.liste{display:flex;flex-direction:column;gap:10px}'
     + '.def{border:1px solid #e2e8f0;border-left:4px solid;border-radius:10px;padding:11px 13px;background:#fff}'
     + '.def-haut{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}'
@@ -222,7 +268,8 @@
     + '.score-txt p,.resume,.def-pourquoi,.nb,.pied{color:#b4c0d6}.def{background:#111a2e;border-color:#243049}'
     + '.note{background:#15233f;color:#bfdbfe;border-color:#1e3a8a}.rgaa{background:#15233f;color:#93c5fd}.rgaa.hors{background:#1b2740;color:#94a3b8}'
     + 'code{background:#1b2740;color:#cbd5e1}.aucun{background:#0f2417;color:#86efac;border-color:#166534}'
-    + '.cta2{color:#93c5fd;border-color:#93c5fd}.cta2:hover{background:#15233f}}'
+    + '.cta2{color:#93c5fd;border-color:#93c5fd}.cta2:hover{background:#15233f}'
+    + '.evo.mieux{background:#0f2417;color:#86efac}.evo.pire{background:#2a1414;color:#fca5a5}.evo.neutre{background:#1b2740;color:#b4c0d6}}'
     + '</style>';
 
   demarrer();
