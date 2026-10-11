@@ -83,6 +83,7 @@
         pourquoi: info ? info.p : (v.description || ""),
         crit: crit, nb: nb, imp: imp,
         ik: IMPACTS[v.impact] ? v.impact : "minor",
+        xhtml: (v.nodes && v.nodes[0] && v.nodes[0].html) || "",
         exemple: (v.nodes && v.nodes[0] && v.nodes[0].target && v.nodes[0].target.join(" ")) || ""
       });
     });
@@ -148,7 +149,7 @@
     var dExport = {
       u: location.href, t: Date.now(), ok: ok, tot: total, nc: nbCritiques,
       ev: prec ? { d: prec.d, ok: prec.ok, tot: prec.tot } : null,
-      d: defauts.map(function (x) { return { t: x.titre, p: x.pourquoi, c: x.crit, n: x.nb, i: x.ik }; })
+      d: defauts.map(function (x) { return { t: x.titre, p: x.pourquoi, c: x.crit, n: x.nb, i: x.ik, x: (x.xhtml || "").slice(0, 600) }; })
     };
     h.push('<button type="button" class="cta2 exporter">Exporter le rapport (marque blanche) →</button>');
 

@@ -22,8 +22,11 @@
   .barre-outils { position:sticky; top:0; background:var(--fond); padding:.8rem 0; margin-bottom:1rem;
                   display:flex; gap:.6rem; justify-content:flex-end; z-index:10; border-bottom:1px solid var(--bord); }
   .vide { text-align:center; color:var(--encre-douce); padding:3rem 1rem; }
+  .ia-bloc { margin-top:.8rem; padding:.9rem 1rem; background:var(--marque-claire); border:1px solid var(--bord); border-radius:12px; font-size:.92rem; }
+  .ia-bloc p { margin:0 0 .6rem; } .ia-bloc p:last-child { margin-bottom:0; } .ia-bloc pre { margin:.5rem 0; }
   @media print {
     .barre-outils { display:none !important; }
+    .ia-btn { display:none !important; }
     .rapport { max-width:none; padding:0; }
     .carte { break-inside:avoid; }
     a[href]:after { content:""; }
@@ -48,6 +51,23 @@
     "10":"Présentation","11":"Formulaires","12":"Navigation","13":"Consultation" };
   var GRAV = { critical:["g-critical","critique"], serious:["g-serious","sérieux"],
     moderate:["g-moderate","moyen"], minor:["g-minor","mineur"] };
+
+  // Relais IA (feature D) — URL du Worker Cloudflare qui garde la clé API secrète.
+  // Vide = pas d'assistant IA (les boutons « Corriger avec l'IA » n'apparaissent pas).
+  var RELAIS_IA = "";
+
+  function mdVersHtml(md) {
+    var s = echap(md);
+    s = s.replace(/```[a-zA-Z]*\n?([\s\S]*?)```/g, function (m, code) {
+      return "<pre><code>" + code.replace(/\n$/, "") + "</code></pre>";
+    });
+    s = s.replace(/`([^`]+)`/g, '<code class="enligne">$1</code>');
+    s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+    var parts = s.split(/(<pre>[\s\S]*?<\/pre>)/);
+    return "<p>" + parts.map(function (p) {
+      return p.indexOf("<pre>") === 0 ? p : p.replace(/\n{2,}/g, "</p><p>").replace(/\n/g, "<br>");
+    }).join("") + "</p>";
+  }
 
   function echap(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){
     return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
@@ -121,7 +141,7 @@
 
   if (defs.length) {
     h.push('<h2 style="margin-top:2.5rem">Défauts détectés</h2><div class="r-crit">');
-    defs.forEach(function (x) {
+    defs.forEach(function (x, idx) {
       var g = GRAV[x.i] || GRAV.minor;
       var badges = (x.c && x.c.length)
         ? x.c.map(function (c) {
@@ -129,12 +149,16 @@
             return '<span class="jeton">RGAA ' + echap(c) + (th ? " · " + echap(th) : "") + '</span>';
           }).join(" ")
         : '<span class="jeton">hors périmètre automatique</span>';
+      var ia = RELAIS_IA
+        ? '<button type="button" class="bouton second ia-btn" data-i="' + idx + '" style="margin-top:.8rem;font-size:.85rem;padding:.45rem 1.05rem">✨ Corriger avec l\'IA</button>'
+          + '<div class="ia-sortie" id="ia-' + idx + '"></div>'
+        : "";
       h.push('<div class="carte"><div class="entre" style="margin-bottom:.5rem">'
         + '<span class="gravite ' + g[0] + '">' + g[1] + '</span>'
         + '<span class="muet petit">' + (x.n || 1) + ' élément' + ((x.n || 1) > 1 ? "s" : "") + '</span></div>'
         + '<h3 style="margin:.2rem 0 .4rem">' + echap(x.t) + '</h3>'
         + '<p class="muet" style="margin:0 0 .7rem">' + echap(x.p) + '</p>'
-        + '<div class="pile">' + badges + '</div></div>');
+        + '<div class="pile">' + badges + '</div>' + ia + '</div>');
     });
     h.push('</div>');
   } else {
@@ -150,6 +174,38 @@
 
   root.innerHTML = h.join("");
   document.getElementById("imprimer").onclick = function () { window.print(); };
+
+  // Assistant IA (feature D) : chaque bouton appelle le relais (qui garde la clé).
+  if (RELAIS_IA) {
+    [].forEach.call(document.querySelectorAll(".ia-btn"), function (btn) {
+      btn.addEventListener("click", function () {
+        var i = +btn.getAttribute("data-i"), x = defs[i];
+        var sortie = document.getElementById("ia-" + i);
+        btn.disabled = true;
+        btn.textContent = "L'IA réfléchit…";
+        sortie.innerHTML = '<p class="muet petit" style="margin-top:.6rem">Analyse en cours…</p>';
+        fetch(RELAIS_IA, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ defaut: {
+            titre: x.t, critere: (x.c && x.c[0]) || "", pourquoi: x.p, html: x.x || ""
+          } })
+        }).then(function (r) { return r.json(); }).then(function (j) {
+          if (j && j.texte) {
+            btn.style.display = "none";
+            sortie.innerHTML = '<div class="ia-bloc">' + mdVersHtml(j.texte) + '</div>';
+          } else {
+            btn.disabled = false; btn.textContent = "✨ Corriger avec l'IA";
+            sortie.innerHTML = '<p class="muet petit" style="margin-top:.6rem">Service IA indisponible'
+              + (j && j.error ? " : " + echap(j.error) : "") + '.</p>';
+          }
+        }).catch(function () {
+          btn.disabled = false; btn.textContent = "✨ Corriger avec l'IA";
+          sortie.innerHTML = '<p class="muet petit" style="margin-top:.6rem">Impossible de contacter l\'assistant IA.</p>';
+        });
+      });
+    });
+  }
 })();
 </script>
 </body>
