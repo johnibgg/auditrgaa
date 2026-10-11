@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Rapport d'accessibilité RGAA 4.1</title>
+<script>try{var _t=localStorage.getItem("theme");if(_t)document.documentElement.setAttribute("data-theme",_t);}catch(e){}</script>
+<link rel="stylesheet" href="auditrgaa.css">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+  .rapport { max-width: 880px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+  .r-tete { display:flex; align-items:center; justify-content:space-between; gap:1.5rem;
+            flex-wrap:wrap; border-bottom:2px solid var(--marque); padding-bottom:1.25rem; margin-bottom:2rem; }
+  .r-marque { display:flex; align-items:center; gap:.9rem; }
+  .r-marque img { max-height:52px; max-width:220px; width:auto; border-radius:6px; }
+  .r-marque .nom { font-weight:600; font-size:1.25rem; }
+  .r-meta { text-align:right; font-size:.9rem; color:var(--encre-faible); }
+  .r-meta a { color:var(--marque); word-break:break-all; }
+  .r-score { display:flex; align-items:center; gap:1.5rem; margin:1.5rem 0 2rem; flex-wrap:wrap; }
+  .r-crit { display:flex; flex-direction:column; gap:1rem; }
+  .barre-outils { position:sticky; top:0; background:var(--fond); padding:.8rem 0; margin-bottom:1rem;
+                  display:flex; gap:.6rem; justify-content:flex-end; z-index:10; border-bottom:1px solid var(--bord); }
+  .vide { text-align:center; color:var(--encre-douce); padding:3rem 1rem; }
+  @media print {
+    .barre-outils { display:none !important; }
+    .rapport { max-width:none; padding:0; }
+    .carte { break-inside:avoid; }
+    a[href]:after { content:""; }
+  }
+</style>
+</head>
+<body>
+<div class="barre-outils enveloppe">
+  <button class="bouton" type="button" id="imprimer">Imprimer / Enregistrer en PDF</button>
+  <a class="bouton second" href="outil.html">Nouveau test</a>
+</div>
+
+<main class="rapport" id="rapport">
+  <p class="vide" id="vide">Chargement du rapport…</p>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  var THEMES = { "1":"Images","2":"Cadres","3":"Couleurs","4":"Multimédia","5":"Tableaux",
+    "6":"Liens","7":"Scripts","8":"Éléments obligatoires","9":"Structuration",
+    "10":"Présentation","11":"Formulaires","12":"Navigation","13":"Consultation" };
+  var GRAV = { critical:["g-critical","critique"], serious:["g-serious","sérieux"],
+    moderate:["g-moderate","moyen"], minor:["g-minor","mineur"] };
+
+  function echap(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+
+  function donnees() {
+    try { return JSON.parse(decodeURIComponent(location.hash.slice(1))); }
+    catch (e) { return null; }
+  }
+  function marque() {
+    try { return JSON.parse(localStorage.getItem("auditrgaa_marque")) || {}; }
+    catch (e) { return {}; }
+  }
+
+  var d = donnees(), m = marque();
+  var root = document.getElementById("rapport");
+  if (!d) {
+    document.getElementById("vide").innerHTML =
+      "Aucune donnée de rapport. Lancez le <a href='outil.html'>Test express</a> sur une page, "
+      + "puis cliquez «&nbsp;Exporter le rapport&nbsp;».";
+    return;
+  }
+
+  if (m.couleur) document.documentElement.style.setProperty("--marque", m.couleur);
+
+  var ratio = d.tot ? d.ok / d.tot : 1;
+  var sc = ratio >= .9 ? "score-bon" : (ratio >= .6 ? "score-moyen" : "score-mauvais");
+  var date = new Date(d.t || Date.now()).toLocaleDateString("fr-FR",
+    { day:"numeric", month:"long", year:"numeric" });
+
+  var logo = m.logo
+    ? '<img src="' + echap(m.logo) + '" alt="' + echap(m.nom || "Logo") + '">'
+    : '';
+  var nom = m.nom ? '<span class="nom">' + echap(m.nom) + '</span>' : '';
+
+  var h = [];
+  h.push('<div class="r-tete"><div class="r-marque">' + logo + nom + '</div>'
+    + '<div class="r-meta">Rapport du ' + date + '<br>'
+    + '<a href="' + echap(d.u) + '">' + echap(d.u) + '</a></div></div>');
+
+  h.push('<h1>Rapport d\'accessibilité <span class="point" style="color:var(--marque)">RGAA 4.1</span></h1>');
+
+  h.push('<div class="r-score"><span class="pastille-score ' + sc + '">'
+    + '<span class="valeur">' + d.ok + '</span><span class="sur">/ ' + d.tot + '</span></span>'
+    + '<div><p style="margin:0"><strong>' + d.ok + ' critère' + (d.ok > 1 ? "s" : "")
+    + ' sans défaut détecté</strong> sur ' + d.tot + ' critères RGAA testables automatiquement.</p>'
+    + '<p class="muet" style="margin:.3rem 0 0">' + (d.d ? d.d.length : 0) + ' type(s) de défaut'
+    + (d.nc ? ' — dont <strong style="color:var(--critique)">' + d.nc + ' critique(s)</strong>' : "")
+    + '.</p></div></div>');
+
+  h.push('<div class="alerte alerte-info"><strong>Portée de ce contrôle.</strong> '
+    + 'L\'analyse automatique (axe-core 4.10.2) couvre environ ' + d.tot + ' des 106 critères '
+    + 'du RGAA 4.1. Les autres critères exigent un contrôle humain : ce rapport est un état des '
+    + 'lieux technique, non une déclaration de conformité.</div>');
+
+  // Défauts groupés par thématique RGAA
+  var defs = (d.d || []).slice().sort(function (a, b) {
+    var o = { critical:4, serious:3, moderate:2, minor:1 };
+    return (o[b.i] || 0) - (o[a.i] || 0);
+  });
+
+  if (defs.length) {
+    h.push('<h2 style="margin-top:2.5rem">Défauts détectés</h2><div class="r-crit">');
+    defs.forEach(function (x) {
+      var g = GRAV[x.i] || GRAV.minor;
+      var badges = (x.c && x.c.length)
+        ? x.c.map(function (c) {
+            var th = THEMES[c.split(".")[0]] || "";
+            return '<span class="jeton">RGAA ' + echap(c) + (th ? " · " + echap(th) : "") + '</span>';
+          }).join(" ")
+        : '<span class="jeton">hors périmètre automatique</span>';
+      h.push('<div class="carte"><div class="entre" style="margin-bottom:.5rem">'
+        + '<span class="gravite ' + g[0] + '">' + g[1] + '</span>'
+        + '<span class="muet petit">' + (x.n || 1) + ' élément' + ((x.n || 1) > 1 ? "s" : "") + '</span></div>'
+        + '<h3 style="margin:.2rem 0 .4rem">' + echap(x.t) + '</h3>'
+        + '<p class="muet" style="margin:0 0 .7rem">' + echap(x.p) + '</p>'
+        + '<div class="pile">' + badges + '</div></div>');
+    });
+    h.push('</div>');
+  } else {
+    h.push('<div class="alerte alerte-bon" style="margin-top:2rem"><strong>Aucun défaut détecté '
+      + 'par l\'analyse automatique.</strong> Cela ne vaut pas conformité : la majorité des critères '
+      + 'RGAA demandent une vérification humaine.</div>');
+  }
+
+  h.push('<p class="muet petit" style="margin-top:2.5rem;border-top:1px solid var(--bord);padding-top:1rem">'
+    + 'Méthodologie : analyse automatique avec axe-core 4.10.2, règles traduites vers le RGAA 4.1. '
+    + 'Outil fourni par AuditRGAA (auditrgaa.com). '
+    + (m.nom ? 'Audit réalisé par ' + echap(m.nom) + '.' : '') + '</p>');
+
+  root.innerHTML = h.join("");
+  document.getElementById("imprimer").onclick = function () { window.print(); };
+})();
+</script>
+</body>
+</html>

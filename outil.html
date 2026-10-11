@@ -103,6 +103,34 @@
       <a class="bouton grand" href="offres.html">Obtenir un rapport complet commenté</a>
       <p class="aide" style="margin-top:.75rem">Chaque défaut localisé, avec son code corrigé et un brouillon de déclaration.</p>
     </div>
+
+    <section id="marque-blanche" style="margin-top:3.5rem;border-top:1px solid var(--bord);padding-top:2.5rem">
+      <p class="jeton">Agences · marque blanche</p>
+      <h2>Livrez le rapport à <em>votre</em> marque</h2>
+      <p class="chapeau" style="margin-bottom:1.5rem">
+        Réglez votre logo et votre couleur une seule fois. Quand vous exportez un rapport depuis
+        le Test express, il porte <strong>votre</strong> marque — prêt à envoyer à votre client.
+      </p>
+      <div class="carte" style="max-width:640px">
+        <div class="champ"><label for="mb-nom">Nom de votre agence</label>
+          <input type="text" id="mb-nom" placeholder="Agence Dupont"></div>
+        <div class="champ"><label for="mb-logo">Logo (PNG, SVG… max ~300&nbsp;Ko)</label>
+          <input type="file" id="mb-logo" accept="image/*"></div>
+        <div class="champ"><label for="mb-couleur">Couleur d'accent</label>
+          <input type="color" id="mb-couleur" value="#1d4ed8" style="width:64px;height:42px;padding:2px"></div>
+        <p class="aide">Aperçu&nbsp;: <span id="mb-apercu"></span></p>
+        <p class="pile" style="margin-top:1rem">
+          <button type="button" class="bouton" id="mb-enreg">Enregistrer ma marque</button>
+          <button type="button" class="bouton second" id="mb-reset">Réinitialiser</button>
+        </p>
+        <p class="aide" id="mb-msg" style="margin-top:.6rem;color:var(--bon);font-weight:600"></p>
+      </div>
+      <p class="aide" style="margin-top:1rem">
+        Tout reste dans votre navigateur (rien n'est envoyé). Le rapport cite l'outil
+        (axe-core&nbsp;4.10.2) comme l'exige le modèle DINUM&nbsp;; <strong>vous</strong> en êtes
+        l'auteur de l'audit.
+      </p>
+    </section>
   </div>
 </section>
 </main>
@@ -115,5 +143,55 @@
        <a href="mailto:contact@auditrgaa.com">contact@auditrgaa.com</a></p>
   </div>
 </footer>
+
+<script>
+(function () {
+  "use strict";
+  var K = "auditrgaa_marque";
+  function lire() { try { return JSON.parse(localStorage.getItem(K)) || {}; } catch (e) { return {}; } }
+  var m = lire();
+  var nom = document.getElementById("mb-nom"),
+      logo = document.getElementById("mb-logo"),
+      couleur = document.getElementById("mb-couleur"),
+      apercu = document.getElementById("mb-apercu"),
+      msg = document.getElementById("mb-msg");
+
+  function echap(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function peindre() {
+    nom.value = m.nom || "";
+    if (m.couleur) couleur.value = m.couleur;
+    apercu.innerHTML = (m.nom || m.logo)
+      ? ((m.logo ? '<img src="' + echap(m.logo) + '" alt="" style="max-height:38px;vertical-align:middle;margin-right:.6rem;border-radius:4px">' : "")
+         + (m.nom ? "<strong>" + echap(m.nom) + "</strong>" : ""))
+      : '<span class="muet">Aucune marque enregistrée</span>';
+  }
+  peindre();
+
+  logo.addEventListener("change", function (e) {
+    var f = e.target.files && e.target.files[0];
+    if (!f) return;
+    if (f.size > 300000) { alert("Logo trop lourd (max ~300 Ko). Choisissez une image plus légère."); logo.value = ""; return; }
+    var r = new FileReader();
+    r.onload = function () { m.logo = r.result; peindre(); };
+    r.readAsDataURL(f);
+  });
+  document.getElementById("mb-enreg").addEventListener("click", function () {
+    m.nom = nom.value.trim();
+    m.couleur = couleur.value;
+    try { localStorage.setItem(K, JSON.stringify(m)); }
+    catch (e) { msg.style.color = "var(--critique)"; msg.textContent = "Impossible d'enregistrer (navigateur privé ?)."; return; }
+    peindre();
+    msg.style.color = "var(--bon)";
+    msg.textContent = "Marque enregistrée. Vos rapports exportés la porteront.";
+  });
+  document.getElementById("mb-reset").addEventListener("click", function () {
+    try { localStorage.removeItem(K); } catch (e) {}
+    m = {}; couleur.value = "#1d4ed8"; peindre();
+    msg.style.color = "var(--encre-faible)";
+    msg.textContent = "Marque réinitialisée.";
+  });
+})();
+</script>
 </body>
 </html>

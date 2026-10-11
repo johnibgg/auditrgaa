@@ -82,6 +82,7 @@
         titre: info ? info.t : (v.help || v.id),
         pourquoi: info ? info.p : (v.description || ""),
         crit: crit, nb: nb, imp: imp,
+        ik: IMPACTS[v.impact] ? v.impact : "minor",
         exemple: (v.nodes && v.nodes[0] && v.nodes[0].target && v.nodes[0].target.join(" ")) || ""
       });
     });
@@ -132,6 +133,13 @@
         + 'Cela ne vaut pas conformité : la majorité des critères demandent une vérification humaine.</p>');
     }
 
+    // Données pour l'export en marque blanche (rapport.html les relit).
+    var dExport = {
+      u: location.href, t: Date.now(), ok: ok, tot: total, nc: nbCritiques,
+      d: defauts.map(function (x) { return { t: x.titre, p: x.pourquoi, c: x.crit, n: x.nb, i: x.ik }; })
+    };
+    h.push('<button type="button" class="cta2 exporter">Exporter le rapport (marque blanche) →</button>');
+
     // Appel à l'action
     var url = encodeURIComponent(location.href);
     h.push('<a class="cta" href="mailto:contact@auditrgaa.com?subject=Rapport%20complet%20AuditRGAA&body=Bonjour%2C%0A%0AJe%20souhaite%20le%20rapport%20complet%20comment%C3%A9%20pour%20cette%20page%20%3A%20' + url + '%0A%0AMerci.">Obtenir le rapport complet commenté →</a>');
@@ -140,6 +148,13 @@
 
     h.push('</div>');
     panneau(h.join(""));
+
+    var host = document.getElementById(PANEL_ID);
+    var exp = host && host.shadowRoot.querySelector(".exporter");
+    if (exp) exp.onclick = function () {
+      var ROOT = BASE.replace(/bookmarklet\/?$/, "");
+      window.open(ROOT + "rapport.html#" + encodeURIComponent(JSON.stringify(dExport)), "_blank");
+    };
   }
 
   // ---- UI ----
@@ -201,11 +216,13 @@
     + 'code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;background:#f1f5f9;color:#334155;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}'
     + '.aucun{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;border-radius:10px;padding:12px}'
     + '.cta{display:block;text-align:center;background:#1d4ed8;color:#fff;text-decoration:none;font-weight:600;padding:12px;border-radius:999px;margin:18px 0 10px}.cta:hover{background:#1e40af}'
+    + '.cta2{display:block;width:100%;text-align:center;background:transparent;color:#1d4ed8;border:1.5px solid #1d4ed8;font-weight:600;padding:11px;border-radius:999px;margin:16px 0 0;cursor:pointer;font-size:14px;font-family:inherit}.cta2:hover{background:#eff6ff}'
     + '.pied{font-size:12px;color:#64748b;text-align:center}.pied a{color:#1d4ed8}'
     + '@media(prefers-color-scheme:dark){.panneau{background:#0b1120;color:#e6ebf4}.tete{border-color:#243049}.fermer{color:#b4c0d6}.fermer:hover{background:#1b2740}'
     + '.score-txt p,.resume,.def-pourquoi,.nb,.pied{color:#b4c0d6}.def{background:#111a2e;border-color:#243049}'
     + '.note{background:#15233f;color:#bfdbfe;border-color:#1e3a8a}.rgaa{background:#15233f;color:#93c5fd}.rgaa.hors{background:#1b2740;color:#94a3b8}'
-    + 'code{background:#1b2740;color:#cbd5e1}.aucun{background:#0f2417;color:#86efac;border-color:#166534}}'
+    + 'code{background:#1b2740;color:#cbd5e1}.aucun{background:#0f2417;color:#86efac;border-color:#166534}'
+    + '.cta2{color:#93c5fd;border-color:#93c5fd}.cta2:hover{background:#15233f}}'
     + '</style>';
 
   demarrer();
