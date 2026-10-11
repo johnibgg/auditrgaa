@@ -2,15 +2,12 @@
   <title>AuditRGAA</title>
   <!--
     Un anneau de focus : le contour qui entoure un élément quand on navigue
-    au clavier. Ce qui le fait reconnaître, c'est l'écart avec le contenu
-    (`outline-offset`) — 6 unités sur 64, conservé jusqu'à 16 px.
-
-    Couleurs explicites, pas de `currentColor` : ce fichier est aussi servi
-    comme image, et une image n'hérite pas de la couleur du texte.
+    au clavier. Couleurs explicites, pas de currentColor : ce fichier est
+    aussi servi comme image, et une image n'hérite pas de la couleur du texte.
   -->
-  <rect x="3" y="3" width="58" height="58" rx="15" fill="none"
-        stroke="#1d4ed8" stroke-width="6"/>
-  <rect x="15" y="15" width="34" height="34" rx="8" fill="#1d4ed8"/>
-  <path d="M23 32.5 L29.5 39 L41 26.5" fill="none" stroke="#ffffff"
-        stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="3" y="3" width="58" height="58" rx="17" fill="none"
+        stroke="#1d4ed8" stroke-width="3.5"/>
+  <rect x="13" y="13" width="38" height="38" rx="11" fill="#1d4ed8"/>
+  <path d="M22.5 32.6 L29.3 39.4 L42 25.6" fill="none" stroke="#ffffff"
+        stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
