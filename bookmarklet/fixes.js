@@ -15,6 +15,8 @@ window.__RGAA_FIX = {
     code: "<area shape=\"rect\" coords=\"…\" href=\"/paris\" alt=\"Paris\">" },
   "object-alt": { c: "Donnez une alternative textuelle à l'élément <object> (texte entre les balises ou aria-label).",
     code: "<object data=\"schema.svg\" type=\"image/svg+xml\" aria-label=\"Schéma du circuit\"></object>" },
+  "image-redundant-alt": { c: "Si l'image ne fait que répéter un texte voisin, rendez-la décorative avec un alt vide (le texte suffit). Sinon, donnez une alternative qui apporte une info différente.",
+    code: "<a href=\"/\"><img src=\"logo.svg\" alt=\"\"> Accueil</a>\n<!-- alt vide : le mot « Accueil » à côté suffit déjà -->" },
 
   // --- Cadres (2.1 / 2.2) ---
   "frame-title": { c: "Ajoutez un title descriptif à chaque iframe.",
